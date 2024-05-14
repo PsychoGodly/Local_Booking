@@ -20,7 +20,7 @@ public class EventController {
         return eventRepository.save(event);
     }
 
-    @GetMapping("/Allevents")
+    @GetMapping("/test")
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }

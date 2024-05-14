@@ -1,12 +1,25 @@
-import React from 'react'
-import Calendar from './component/Calendar'
+import React from "react";
+import Calendar from "./component/Calendar";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Test from "./component/Test";
 
 const App = () => {
   return (
     <div>
-        <Calendar />
-    </div>
-  )
-}
+      <Router>
+        <Switch>
+          <Route path="/calendar">
+            <Calendar />
+          </Route>
+          
+          <Route path="/test">
+            <Test />
+          </Route>
 
-export default App
+        </Switch>
+      </Router>
+    </div>
+  );
+};
+
+export default App;
