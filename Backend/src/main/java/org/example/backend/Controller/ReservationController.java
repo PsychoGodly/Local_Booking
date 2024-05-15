@@ -17,22 +17,56 @@ import java.util.List;
 @RequestMapping("/api")
 public class ReservationController {
 
-
-
     @Autowired
     private ReservationRepository reservationRepository;
 
-    /*
-    @GetMapping("/salles/reservations")
-    public List<Reservation> get_Reservation() {
-        return reservationRepository.findAll();
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private SalleRepository salleRepository;
+
+    // Endpoint to insert a new reservation
+    @PostMapping("/reservations")
+    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation newReservation) {
+        try {
+            // Check if the salle and user associated with the reservation exist
+            Salle salle = salleRepository.findById(newReservation.getSalle().getId())
+                    .orElseThrow(() -> new RuntimeException("Salle not found"));
+            User user = userRepository.findById(Math.toIntExact(newReservation.getUser().getId()))
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            // Assign the salle and user to the reservation
+            newReservation.setSalle(salle);
+            newReservation.setUser(user);
+
+            // Save the new reservation to the database
+            Reservation savedReservation = reservationRepository.save(newReservation);
+            return ResponseEntity.ok(savedReservation);
+        } catch (Exception e) {
+            // If an error occurs, return an internal server error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-     */
-
+    // Endpoint to retrieve reservations by salle type
     @GetMapping("/salle/reservations")
-    public List<Reservation> getReservationsBySalleName(@RequestParam String salleName) {
-        return reservationRepository.findBySalleSalleName(salleName);
-    }
-}
+    public List<Reservation> getReservationsBySalleType(@RequestParam(defaultValue = "1") Long salleTypeId) {
+        // Récupérer les réservations associées à la salle
+        List<Reservation> reservations = reservationRepository.findBySalleId(salleTypeId);
 
+        // Renvoyer les réservations avec les détails de la salle
+        for (Reservation reservation : reservations) {
+            // Récupérer les détails de la salle associée à cette réservation
+            Salle salle = reservation.getSalle();
+            // Ajouter les détails de la salle à la réservation
+            reservation.setSalle(salle);
+        }
+
+        return reservations;
+    }
+
+
+
+
+}
