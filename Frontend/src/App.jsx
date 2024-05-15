@@ -1,19 +1,26 @@
 import React from "react";
-import Calendar from "./component/Calendar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Test from "./component/Test";
+// import Calendar from "./component/Calendar";
+// import Test from "./component/Test";
+import ReservationCalendar from "./component/ReservationCalendar";
+
+
 
 const App = () => {
   return (
     <div>
       <Router>
         <Switch>
-          <Route path="/calendar">
+          {/* <Route path="/calendar">
             <Calendar />
-          </Route>
+          </Route> */}
           
-          <Route path="/test">
+          {/* <Route path="/test">
             <Test />
+          </Route>  */}
+
+          <Route path="/test">
+            <ReservationCalendar />
           </Route>
 
         </Switch>

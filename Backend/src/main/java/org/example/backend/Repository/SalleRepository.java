@@ -1,10 +1,9 @@
 package org.example.backend.Repository;
 
-// EventRepository.java
-import org.example.backend.model.Event;
+import org.example.backend.model.Salle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface SalleRepository extends JpaRepository<Salle, Long> {
 }
