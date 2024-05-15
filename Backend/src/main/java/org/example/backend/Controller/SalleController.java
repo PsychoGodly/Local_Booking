@@ -21,4 +21,6 @@ public class SalleController {
     public List<Salle> getAllSalles() {
         return salleRepository.findAll();
     }
+
+
 }

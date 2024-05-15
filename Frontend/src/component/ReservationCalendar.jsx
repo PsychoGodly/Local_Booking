@@ -9,8 +9,9 @@ function ReservationCalendar() {
   const [salles, setSalles] = useState([]);
   const [selectedSalle, setSelectedSalle] = useState("");
   const [events, setEvents] = useState([]);
-  const [eventInfo, setEventInfo] = useState({});
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [comment, setComment] = useState("");
+  const [color, setColor] = useState("#000000");
 
   useEffect(() => {
     // Effectuer une requête AJAX pour récupérer les salles depuis le backend
@@ -48,27 +49,35 @@ function ReservationCalendar() {
     setSelectedSalle(event.target.value);
   };
 
-  const handleDateClick = (arg) => {
-    // Ajoute la date cliquée à la liste des dates sélectionnées
-    setSelectedDates([...selectedDates, arg.date]);
+  // Dans la fonction handleDateClick
+// Dans la fonction handleDateClick
+const handleDateClick = (arg) => {
+    // Utilise la date exacte de la sélection
+    setSelectedDate(arg.date);
   };
-
-  const handleSubmit = (formData) => {
+  
+  // Dans la fonction handleSubmit
+  const handleSubmit = () => {
+    if (!selectedDate) {
+      console.error("No selected date.");
+      return;
+    }
+  
     // Crée un nouvel objet de réservation avec les données du formulaire
     const newReservation = {
       salleID: selectedSalle,
-      startTime: selectedDates[0],
-      endTime: selectedDates[selectedDates.length - 1],
-      comment: formData.comment,
-      color: formData.color,
+      startTime: selectedDate.toISOString(), // Utilise la date exacte de la sélection
+      endTime: selectedDate.toISOString(), // Utilise la date exacte de la sélection
+      comment: comment,
+      color: color,
     };
-
-    // Effectuer une requête AJAX pour ajouter la nouvelle réservation
+  
+    // Effectue une requête AJAX pour ajouter la nouvelle réservation
     axios
       .post("http://localhost:8080/api/salles/reservations", newReservation)
       .then((response) => {
         console.log("Reservation added:", response.data);
-        // Mettre à jour les événements affichés dans le calendrier
+        // Met à jour les événements affichés dans le calendrier
         setEvents([
           ...events,
           {
@@ -78,18 +87,16 @@ function ReservationCalendar() {
             color: response.data.color,
           },
         ]);
-        // Réinitialiser les informations d'événement
-        setEventInfo({});
+        // Réinitialise les champs du formulaire
+        setSelectedDate(null);
+        setComment("");
+        setColor("#000000");
       })
       .catch((error) => {
         console.error("Error adding reservation:", error);
       });
   };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEventInfo({ ...eventInfo, [name]: value });
-  };
+  
 
   return (
     <div>
@@ -111,27 +118,25 @@ function ReservationCalendar() {
             events={events}
             dateClick={handleDateClick}
             selectable={true}
-            select={(info) => setSelectedDates([info.start])}
+            select={(info) => setSelectedDate(info.start)}
             unselectAuto={false}
           />
-          {selectedDates.length > 0 && (
+          {selectedDate && (
             <div>
               <h2>Add Reservation</h2>
-                <label>Comment:</label>
-                <input
-                  type="text"
-                  name="comment"
-                  value={eventInfo.comment || ""}
-                  onChange={handleChange}
-                />
-                <label>Color:</label>
-                <input
-                  type="color"
-                  name="color"
-                  value={eventInfo.color || "#000000"}
-                  onChange={handleChange}
-                />
-                <button onClick={handleSubmit} type="submit">Submit</button>
+              <label>Comment:</label>
+              <input
+                type="text"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <label>Color:</label>
+              <input
+                type="color"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+              />
+              <button onClick={handleSubmit}>Submit</button>
             </div>
           )}
         </div>

@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import Calendar from "./component/Calendar";
 // import Test from "./component/Test";
+
 import ReservationCalendar from "./component/ReservationCalendar";
+import MyCalendar from "./component/MyCalendar";
 
 
 
@@ -20,7 +22,7 @@ const App = () => {
           </Route>  */}
 
           <Route path="/test">
-            <ReservationCalendar />
+            <MyCalendar />
           </Route>
 
         </Switch>

@@ -17,61 +17,22 @@ import java.util.List;
 @RequestMapping("/api")
 public class ReservationController {
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private SalleRepository salleRepository;
 
     @Autowired
     private ReservationRepository reservationRepository;
 
-    // Endpoint pour insérer des données initiales (utilisateurs, salles et réservations)
-    @PostMapping("/insert-data")
-    public String insertData(@RequestBody DataInsertionRequest request) {
-        // Insérer les utilisateurs
-        List<User> users = request.getUsers();
-        for (User user : users) {
-            userRepository.save(user);
-        }
-
-        // Insérer les salles
-        List<Salle> salles = request.getSalles();
-        for (Salle salle : salles) {
-            salleRepository.save(salle);
-        }
-
-        // Insérer les réservations
-        List<Reservation> reservations = request.getReservations();
-        for (Reservation reservation : reservations) {
-            reservationRepository.save(reservation);
-        }
-
-        return "Données insérées avec succès";
+    /*
+    @GetMapping("/salles/reservations")
+    public List<Reservation> get_Reservation() {
+        return reservationRepository.findAll();
     }
 
+     */
 
-
-
-
-
-    // Endpoint pour récupérer les réservations d'un utilisateur spécifique avec l'ID utilisateur 1
-    @GetMapping("/reservations/user/{userId}")
-    public List<Reservation> getReservationsByUserId(@PathVariable Long userId) {
-        return reservationRepository.findByUserId(userId);
-    }
-
-    // Endpoint pour enregistrer une nouvelle réservation
-    @PostMapping("/salles/reservations")
-    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation newReservation) {
-        try {
-            // Enregistrement de la nouvelle réservation dans la base de données
-            Reservation savedReservation = reservationRepository.save(newReservation);
-            return ResponseEntity.ok(savedReservation);
-        } catch (Exception e) {
-            // En cas d'erreur, renvoyer une réponse d'erreur
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    @GetMapping("/salle/reservations")
+    public List<Reservation> getReservationsBySalleName(@RequestParam String salleName) {
+        return reservationRepository.findBySalleSalleName(salleName);
     }
 }
 
