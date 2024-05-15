@@ -21,7 +21,9 @@ const Calendar = () => {
         color: reservation.color
       }));
       setEvents(reservations);
-      console.log(reservations)
+
+      console.log(reservations);
+      
     } catch (error) {
       console.error('Error fetching data:', error);
     }
