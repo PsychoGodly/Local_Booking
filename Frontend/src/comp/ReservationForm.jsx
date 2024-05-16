@@ -10,11 +10,15 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
   const [reservationCreated, setReservationCreated] = useState(false);
 
   useEffect(() => {
+
+    setReservationCreated(false);
+    
     if (selectedDates.length > 0) {
       const { startDate, endDate } = selectedDates[0];
       setStartDate(startDate + "T09:00");
       setEndDate(endDate + "T10:00");
     }
+    
   }, [selectedDates]);
 
   const handleFormSubmit = async (e) => {
