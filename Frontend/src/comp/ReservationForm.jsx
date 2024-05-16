@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ReservationForm = ({ setEvents }) => {
+const ReservationForm = ({ selectedDates, setEvents }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
   const [duration, setDuration] = useState(60);
   const [color, setColor] = useState("#ff0000");
   const [reservationCreated, setReservationCreated] = useState(false);
+
+  useEffect(() => {
+    if (selectedDates.length > 0) {
+      const { startDate, endDate } = selectedDates[0];
+      setStartDate(startDate + "T09:00");
+      setEndDate(endDate + "T10:00");
+    }
+  }, [selectedDates]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -20,21 +28,18 @@ const ReservationForm = ({ setEvents }) => {
         color,
       });
       console.log("Reservation created:", response.data);
-      // Ajouter la nouvelle réservation à la liste d'événements
       const newReservation = {
         title: response.data.comment,
         start: response.data.startTime,
         end: response.data.endTime,
         color: response.data.color,
       };
-      setEvents(events => [...events, newReservation]); // Mettre à jour la liste des événements
-      // Réinitialiser les champs du formulaire
+      setEvents(events => [...events, newReservation]);
       setStartDate("");
       setEndDate("");
       setComment("");
       setDuration(60);
       setColor("#ff0000");
-      // Indiquer que la réservation a été créée avec succès
       setReservationCreated(true);
     } catch (error) {
       console.error("Error creating reservation:", error);

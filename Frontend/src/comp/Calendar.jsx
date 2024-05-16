@@ -55,7 +55,7 @@ const Calendar = () => {
       />
       {selectedDates.length > 0 && (
         <div>
-          <ReservationForm setEvents={setEvents} />
+          <ReservationForm selectedDates={selectedDates} setEvents={setEvents} />
         </div>
       )}
     </>
