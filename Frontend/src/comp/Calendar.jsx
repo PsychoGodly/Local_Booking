@@ -16,8 +16,8 @@ const Calendar = () => {
       const response = await axios.get('http://localhost:8080/api/salle/reservations');
       const reservations = response.data.map(reservation => ({
         title: reservation.comment,
-        start: reservation.start_time,
-        end: reservation.end_time,
+        start: reservation.startTime,
+        end: reservation.endTime,
         color: reservation.color
       }));
       setEvents(reservations);

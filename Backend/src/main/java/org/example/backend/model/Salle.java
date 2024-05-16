@@ -1,5 +1,6 @@
 package org.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class Salle {
     private int capacity;
 
     @OneToMany(mappedBy = "salle", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Reservation> reservations;
 }
 

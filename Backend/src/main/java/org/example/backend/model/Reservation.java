@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDateTime;
 
@@ -21,10 +21,12 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "salleID")
+    @JsonBackReference
     private Salle salle;
 
     @ManyToOne
     @JoinColumn(name = "userID")
+    @JsonBackReference
     private User user;
 
     private LocalDateTime startTime;
