@@ -43,12 +43,26 @@ public class ReservationController {
     }
 
     // Endpoint pour insérer une nouvelle réservation
-    @PostMapping(value = "/reservations", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/reservations")
     public ResponseEntity<Reservation> addReservation(@RequestBody Reservation newReservation) {
         try {
+            // Get the first user from the database
+            User user = userRepository.findAll().stream().findFirst()
+                    .orElseThrow(() -> new RuntimeException("No user found"));
+
+            // Get the first salle from the database
+            Salle salle = salleRepository.findAll().stream().findFirst()
+                    .orElseThrow(() -> new RuntimeException("No salle found"));
+
+            // Set the user and salle for the reservation
+            newReservation.setUser(user);
+            newReservation.setSalle(salle);
+
+            // Save the new reservation to the database
             Reservation savedReservation = reservationRepository.save(newReservation);
             return ResponseEntity.ok(savedReservation);
         } catch (Exception e) {
+            // If an error occurs, return an internal server error response
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

@@ -1,12 +1,15 @@
+// Calendar.js
 import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid"; // Importez le plugin timeGridPlugin
+import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
+import ReservationForm from "./ReservationForm";
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
+  const [selectedDates, setSelectedDates] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -29,22 +32,34 @@ const Calendar = () => {
     }
   };
 
+  const handleDateSelect = (info) => {
+    const startDate = info.startStr;
+    const endDate = info.endStr;
+    setSelectedDates([{ startDate, endDate }]);
+    console.log("Date sélectionnée:", info.startStr, " - ", info.endStr);
+  };
+
   return (
-    <FullCalendar
-      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} // Ajoutez le plugin timeGridPlugin
-      initialView="dayGridMonth" // Utilisez le mode timeGridWeek comme vue initiale
-      events={events}
-      headerToolbar={{
-        start: "prev,next today",
-        center: "title",
-        end: "dayGridMonth,timeGridWeek,timeGridDay",
-      }}
-      height={"90vh"}
-      selectable={true}
-      select={(info) => {
-        console.log("Date sélectionnée:", info.startStr, " - ", info.endStr);
-      }}
-    />
+    <>
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        events={events}
+        headerToolbar={{
+          start: "prev,next today",
+          center: "title",
+          end: "dayGridMonth,timeGridWeek,timeGridDay",
+        }}
+        height={"90vh"}
+        selectable={true}
+        select={handleDateSelect}
+      />
+      {selectedDates.length > 0 && (
+        <div>
+          <ReservationForm selectedDates={selectedDates} />
+        </div>
+      )}
+    </>
   );
 };
 
