@@ -1,4 +1,3 @@
-// Calendar.js
 import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -56,7 +55,7 @@ const Calendar = () => {
       />
       {selectedDates.length > 0 && (
         <div>
-          <ReservationForm selectedDates={selectedDates} />
+          <ReservationForm setEvents={setEvents} />
         </div>
       )}
     </>
