@@ -1,5 +1,6 @@
 package org.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,12 +22,12 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "salleID")
-    @JsonBackReference
+    @JsonIgnore
     private Salle salle;
 
     @ManyToOne
     @JoinColumn(name = "userID")
-    @JsonBackReference
+    @JsonIgnore
     private User user;
 
     private LocalDateTime startTime;
