@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import ReservationForm from "./ReservationForm";
 import EditForm from "./EditForm";
+import SalleSelector from "./SalleSelector";
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
@@ -96,8 +97,22 @@ const Calendar = () => {
     );
   };
 
+  const handleEventMount = (info) => {
+    // Récupérez l'élément DOM de l'événement
+    const eventEl = info.el;
+
+    // Ajoutez un style de pointeur au survol de l'événement
+    eventEl.style.cursor = "pointer";
+  };
+
+  const handleSalleSelect = (salleId) => {
+    // Vous pouvez utiliser l'identifiant de la salle sélectionnée ici
+    console.log("Salle sélectionnée:", salleId);
+  };
+
   return (
     <>
+      <SalleSelector onSelect={handleSalleSelect} />
       <FullCalendar
         ref={calendarRef} // Associez la référence au composant FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -113,6 +128,7 @@ const Calendar = () => {
         select={handleDateSelect}
         eventClick={handleEventClick}
         eventContent={renderEventContent} // Ajoutez cette ligne pour personnaliser l'affichage des événements
+        eventDidMount={handleEventMount}
       />
       {selectedDates.length > 0 && (
         <div>
