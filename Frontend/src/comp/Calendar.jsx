@@ -4,7 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 import ReservationForm from "./ReservationForm";
 import EditForm from "./EditForm";
@@ -68,13 +68,33 @@ const Calendar = () => {
       const calendarApi = calendarRef.current.getApi();
       const event = calendarApi.getEventById(updatedReservation.id);
       if (event) {
-        event.setProp('title', updatedReservation.title);
+        event.setProp("title", updatedReservation.title);
         event.setStart(updatedReservation.start);
         event.setEnd(updatedReservation.end);
-        event.setProp('backgroundColor', updatedReservation.color);
+        event.setProp("backgroundColor", updatedReservation.color);
       }
     }
     setSelectedReservation(null);
+  };
+
+  const renderEventContent = (eventInfo) => {
+    const formatTime = (date) => {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    };
+
+    const startTime = formatTime(eventInfo.event.start);
+    const endTime = formatTime(eventInfo.event.end);
+
+    return (
+      <div>
+        <b>{eventInfo.event.title}</b>
+        <br />
+        <p>[{startTime} - {endTime}]</p>
+        <br />
+      </div>
+    );
   };
 
   return (
@@ -93,15 +113,22 @@ const Calendar = () => {
         selectable={true}
         select={handleDateSelect}
         eventClick={handleEventClick}
+        eventContent={renderEventContent} // Ajoutez cette ligne pour personnaliser l'affichage des événements
       />
       {selectedDates.length > 0 && (
         <div>
-          <ReservationForm selectedDates={selectedDates} setEvents={setEvents} />
+          <ReservationForm
+            selectedDates={selectedDates}
+            setEvents={setEvents}
+          />
         </div>
       )}
       {selectedReservation && (
         <div>
-          <EditForm reservation={selectedReservation} onSave={handleSaveReservation} />
+          <EditForm
+            reservation={selectedReservation}
+            onSave={handleSaveReservation}
+          />
         </div>
       )}
     </>
