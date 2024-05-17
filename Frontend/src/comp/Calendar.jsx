@@ -63,15 +63,19 @@ const Calendar = () => {
         event.id === updatedReservation.id ? updatedReservation : event
       )
     );
+    // Update the event in the calendar immediately
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      const event = calendarApi.getEventById(updatedReservation.id);
+      if (event) {
+        event.setProp('title', updatedReservation.title);
+        event.setStart(updatedReservation.start);
+        event.setEnd(updatedReservation.end);
+        event.setProp('backgroundColor', updatedReservation.color);
+      }
+    }
     setSelectedReservation(null);
   };
-
-  useEffect(() => {
-    // Mettre à jour le calendrier lorsque les événements changent
-    if (calendarRef.current) {
-      calendarRef.current.getApi().refetchEvents();
-    }
-  }, [events]);
 
   return (
     <>
