@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
+
 import ReservationForm from "./ReservationForm";
-import EditForm from "./EditForm"; 
+import EditForm from "./EditForm";
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
+  const calendarRef = useRef(null); // Créez une référence pour le composant FullCalendar
+  const [calendarKey, setCalendarKey] = useState(0); // Ajoutez une clé d'état pour le composant FullCalendar
 
   useEffect(() => {
     fetchData();
@@ -18,9 +22,11 @@ const Calendar = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/salle/reservations");
+      const response = await axios.get(
+        "http://localhost:8080/api/salle/reservations"
+      );
       const reservations = response.data.map((reservation) => ({
-        id: reservation.id,
+        id: reservation.id || uuidv4(),
         title: reservation.comment,
         start: reservation.startTime,
         end: reservation.endTime,
@@ -40,15 +46,42 @@ const Calendar = () => {
   };
 
   const handleEventClick = (clickInfo) => {
-    const clickedEventId = clickInfo.event.id; // Récupérer l'identifiant unique de l'événement cliqué
-    const clickedReservation = events.find(event => event.id === clickedEventId); // Rechercher la réservation correspondante
-    setSelectedReservation(clickedReservation); // Mettre à jour la réservation sélectionnée
+    console.log("Event clicked:", clickInfo.event);
+    const reservationInfo = {
+      id: clickInfo.event.id,
+      title: clickInfo.event.title,
+      start: clickInfo.event.start,
+      end: clickInfo.event.end,
+      color: clickInfo.event.backgroundColor,
+    };
+    console.log("Reservation info:", reservationInfo);
+    setSelectedReservation(reservationInfo);
   };
-  
+
+  const handleSaveReservation = (updatedReservation) => {
+  setEvents((prevEvents) =>
+    prevEvents.map((event) =>
+      event.id === updatedReservation.id ? updatedReservation : event
+    )
+  );
+  setSelectedReservation(null);
+  // Mettez à jour la clé du calendrier pour forcer le rechargement
+  setCalendarKey(prevKey => prevKey + 1);
+};
+
+
+  useEffect(() => {
+    // Mettre à jour le calendrier lorsque les événements changent
+    if (calendarRef.current) {
+      calendarRef.current.getApi().refetchEvents();
+    }
+  }, [events]);
 
   return (
     <>
       <FullCalendar
+        key={calendarKey} // Utilisez la clé pour forcer le rechargement du composant FullCalendar
+        ref={calendarRef} // Associez la référence au composant FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         events={events}
@@ -69,14 +102,7 @@ const Calendar = () => {
       )}
       {selectedReservation && (
         <div>
-          <EditForm reservation={selectedReservation} onSave={(updatedReservation) => {
-            setEvents((prevEvents) =>
-              prevEvents.map((event) =>
-                event.id === updatedReservation.id ? updatedReservation : event
-              )
-            );
-            setSelectedReservation(null);
-          }} />
+          <EditForm reservation={selectedReservation} onSave={handleSaveReservation} />
         </div>
       )}
     </>

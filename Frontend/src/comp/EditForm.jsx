@@ -3,6 +3,7 @@ import axios from "axios";
 
 const EditForm = ({ reservation, onSave }) => {
   const [editedReservation, setEditedReservation] = useState({
+    id: reservation.id, // Inclure l'ID de la réservation dans le state
     startDate: reservation.start,
     endDate: reservation.end,
     comment: reservation.title,
@@ -12,7 +13,7 @@ const EditForm = ({ reservation, onSave }) => {
 
   const handleSave = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/api/reservations/${reservation.id}`, {
+      const response = await axios.put(`http://localhost:8080/api/reservations/${editedReservation.id}`, { // Utiliser l'ID de la réservation dans l'URL de la requête PUT
         startTime: editedReservation.startDate,
         endTime: editedReservation.endDate,
         comment: editedReservation.comment,
