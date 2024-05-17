@@ -10,28 +10,27 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
   const [reservationCreated, setReservationCreated] = useState(false);
 
   useEffect(() => {
-    setReservationCreated(false);
 
+    setReservationCreated(false);
+    
     if (selectedDates.length > 0) {
       const { startDate, endDate } = selectedDates[0];
       setStartDate(startDate + "T09:00");
       setEndDate(endDate + "T10:00");
     }
+    
   }, [selectedDates]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/reservations",
-        {
-          startTime: startDate,
-          endTime: endDate,
-          comment,
-          duration,
-          color,
-        }
-      );
+      const response = await axios.post("http://localhost:8080/api/reservations", {
+        startTime: startDate,
+        endTime: endDate,
+        comment,
+        duration,
+        color,
+      });
       console.log("Reservation created:", response.data);
       const newReservation = {
         title: response.data.comment,
@@ -39,7 +38,7 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
         end: response.data.endTime,
         color: response.data.color,
       };
-      setEvents((events) => [...events, newReservation]);
+      setEvents(events => [...events, newReservation]);
       setStartDate("");
       setEndDate("");
       setComment("");
@@ -57,7 +56,7 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
       {reservationCreated ? (
         <p>Réservation créée avec succès!</p>
       ) : (
-        <>
+        <form onSubmit={handleFormSubmit}>
           <label>Date de début:</label>
           <input
             type="datetime-local"
@@ -88,10 +87,8 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
             value={color}
             onChange={(e) => setColor(e.target.value)}
           />
-          <button onClick={handleFormSubmit} type="submit">
-            Réserver
-          </button>
-        </>
+          <button type="submit">Réserver</button>
+        </form>
       )}
     </div>
   );
