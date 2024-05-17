@@ -72,6 +72,31 @@ public class ReservationController {
 
 
 
+    // Endpoint pour modifier une réservation existante
+    @PutMapping("/reservations/{id}")
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation updatedReservation) {
+        try {
+            // Rechercher la réservation dans la base de données par son ID
+            Reservation existingReservation = reservationRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+            // Mettre à jour les champs de la réservation existante avec les nouvelles valeurs
+            existingReservation.setStartTime(updatedReservation.getStartTime());
+            existingReservation.setEndTime(updatedReservation.getEndTime());
+            existingReservation.setComment(updatedReservation.getComment());
+            existingReservation.setDuration(updatedReservation.getDuration());
+            existingReservation.setColor(updatedReservation.getColor());
+
+            // Enregistrer les modifications dans la base de données
+            Reservation savedReservation = reservationRepository.save(existingReservation);
+            return ResponseEntity.ok(savedReservation);
+        } catch (Exception e) {
+            // Si une erreur se produit, renvoyer une réponse d'erreur interne du serveur
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
 
 
 }
