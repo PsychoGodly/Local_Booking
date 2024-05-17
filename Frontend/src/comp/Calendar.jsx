@@ -30,6 +30,7 @@ const Calendar = () => {
         start: reservation.startTime,
         end: reservation.endTime,
         color: reservation.color,
+        user: reservation.user
       }));
       setEvents(reservations);
     } catch (error) {
@@ -86,13 +87,11 @@ const Calendar = () => {
 
     const startTime = formatTime(eventInfo.event.start);
     const endTime = formatTime(eventInfo.event.end);
-
     return (
       <div>
         <b>{eventInfo.event.title}</b>
         <br />
         <p>[{startTime} - {endTime}]</p>
-        <br />
       </div>
     );
   };
