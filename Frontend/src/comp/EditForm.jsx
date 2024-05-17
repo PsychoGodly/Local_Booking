@@ -3,7 +3,7 @@ import axios from "axios";
 
 const EditForm = ({ reservation, onSave }) => {
   const [editedReservation, setEditedReservation] = useState({
-    id: reservation.id, // Inclure l'ID de la réservation dans le state
+    id: reservation.id,
     startDate: reservation.start,
     endDate: reservation.end,
     comment: reservation.title,
@@ -13,14 +13,20 @@ const EditForm = ({ reservation, onSave }) => {
 
   const handleSave = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/api/reservations/${editedReservation.id}`, { // Utiliser l'ID de la réservation dans l'URL de la requête PUT
+      const response = await axios.put(`http://localhost:8080/api/reservations/${reservation.id}`, {
         startTime: editedReservation.startDate,
         endTime: editedReservation.endDate,
         comment: editedReservation.comment,
         duration: editedReservation.duration,
         color: editedReservation.color,
       });
-      onSave(response.data);
+      onSave({
+        id: reservation.id,
+        title: editedReservation.comment,
+        start: editedReservation.startDate,
+        end: editedReservation.endDate,
+        color: editedReservation.color,
+      });
     } catch (error) {
       console.error("Error updating reservation:", error);
     }
@@ -32,13 +38,13 @@ const EditForm = ({ reservation, onSave }) => {
       <label>Date de début:</label>
       <input
         type="datetime-local"
-        value={editedReservation.startDate}
+        value={new Date(editedReservation.startDate).toISOString().slice(0, 16)}
         onChange={(e) => setEditedReservation({...editedReservation, startDate: e.target.value})}
       />
       <label>Date de fin:</label>
       <input
         type="datetime-local"
-        value={editedReservation.endDate}
+        value={new Date(editedReservation.endDate).toISOString().slice(0, 16)}
         onChange={(e) => setEditedReservation({...editedReservation, endDate: e.target.value})}
       />
       <label>Commentaire:</label>

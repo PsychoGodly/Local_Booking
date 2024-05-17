@@ -14,7 +14,6 @@ const Calendar = () => {
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const calendarRef = useRef(null); // Créez une référence pour le composant FullCalendar
-  const [calendarKey, setCalendarKey] = useState(0); // Ajoutez une clé d'état pour le composant FullCalendar
 
   useEffect(() => {
     fetchData();
@@ -59,16 +58,13 @@ const Calendar = () => {
   };
 
   const handleSaveReservation = (updatedReservation) => {
-  setEvents((prevEvents) =>
-    prevEvents.map((event) =>
-      event.id === updatedReservation.id ? updatedReservation : event
-    )
-  );
-  setSelectedReservation(null);
-  // Mettez à jour la clé du calendrier pour forcer le rechargement
-  setCalendarKey(prevKey => prevKey + 1);
-};
-
+    setEvents((prevEvents) =>
+      prevEvents.map((event) =>
+        event.id === updatedReservation.id ? updatedReservation : event
+      )
+    );
+    setSelectedReservation(null);
+  };
 
   useEffect(() => {
     // Mettre à jour le calendrier lorsque les événements changent
@@ -80,7 +76,6 @@ const Calendar = () => {
   return (
     <>
       <FullCalendar
-        key={calendarKey} // Utilisez la clé pour forcer le rechargement du composant FullCalendar
         ref={calendarRef} // Associez la référence au composant FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
