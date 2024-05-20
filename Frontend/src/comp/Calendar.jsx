@@ -17,18 +17,15 @@ const Calendar = () => {
   const calendarRef = useRef(null);
   const [showForm, setShowForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
-  const [selectedSalle, setSelectedSalle] = useState(null);
 
   useEffect(() => {
-    if (selectedSalle) {
-      fetchData(selectedSalle);
-    }
-  }, [selectedSalle]);
+    fetchData();
+  }, []);
 
-  const fetchData = async (salleId) => {
+  const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/salles/${salleId}/reservations`
+        "http://localhost:8080/api/salle/reservations"
       );
       const reservations = response.data.map((reservation) => ({
         id: reservation.id || uuidv4(),
@@ -117,7 +114,6 @@ const Calendar = () => {
 
   const handleSalleSelect = (salleId) => {
     console.log("Selected room:", salleId);
-    setSelectedSalle(salleId);
   };
 
   const handleCancel = () => {
