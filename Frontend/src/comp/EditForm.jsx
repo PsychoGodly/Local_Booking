@@ -35,46 +35,74 @@ const EditForm = ({ reservation, onSave, onCancel }) => {
   };
 
   return (
-    <div>
-      <h3>Modifier la réservation</h3>
-      <label>Date de début:</label>
-      <input
-        type="datetime-local"
-        name="startDate"
-        value={editedReservation.startDate}
-        onChange={handleChange}
-      />
-      <label>Date de fin:</label>
-      <input
-        type="datetime-local"
-        name="endDate"
-        value={editedReservation.endDate}
-        onChange={handleChange}
-      />
-      <label>Commentaire:</label>
-      <input
-        type="text"
-        name="comment"
-        value={editedReservation.comment}
-        onChange={handleChange}
-      />
-      <label>Durée (en minutes):</label>
-      <input
-        type="number"
-        name="duration"
-        value={editedReservation.duration}
-        onChange={handleChange}
-      />
-      <label>Couleur:</label>
-      <input
-        type="color"
-        name="color"
-        value={editedReservation.color}
-        onChange={handleChange}
-      />
-      <button onClick={handleSave}>Enregistrer</button>
-      <button onClick={onCancel}>Annuler</button>
-    </div>
+    <div className="p-4">
+  <h3 className="text-lg font-semibold mb-4">Modifier la réservation</h3>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Date de début:</label>
+    <input
+      type="datetime-local"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      name="startDate"
+      value={editedReservation.startDate}
+      onChange={handleChange}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Date de fin:</label>
+    <input
+      type="datetime-local"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      name="endDate"
+      value={editedReservation.endDate}
+      onChange={handleChange}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Commentaire:</label>
+    <input
+      type="text"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      name="comment"
+      value={editedReservation.comment}
+      onChange={handleChange}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Durée (en minutes):</label>
+    <input
+      type="number"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      name="duration"
+      value={editedReservation.duration}
+      onChange={handleChange}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Couleur:</label>
+    <input
+      type="color"
+      className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md"
+      name="color"
+      value={editedReservation.color}
+      onChange={handleChange}
+    />
+  </div>
+  <div className="flex justify-between">
+    <button
+      onClick={handleSave}
+      className="w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md mr-2"
+    >
+      Enregistrer
+    </button>
+    <button
+      onClick={onCancel}
+      className="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md ml-2"
+    >
+      Annuler
+    </button>
+  </div>
+</div>
+
   );
 };
 
