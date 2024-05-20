@@ -111,42 +111,50 @@ const Calendar = () => {
   };
 
   return (
-    <>
-      <SalleSelector onSelect={handleSalleSelect} />
-      <FullCalendar
-        ref={calendarRef} // Associez la référence au composant FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        headerToolbar={{
-          start: "prev,next today",
-          center: "title",
-          end: "dayGridMonth,timeGridWeek,timeGridDay",
-        }}
-        height={"90vh"}
-        selectable={true}
-        select={handleDateSelect}
-        eventClick={handleEventClick}
-        eventContent={renderEventContent} // Ajoutez cette ligne pour personnaliser l'affichage des événements
-        eventDidMount={handleEventMount}
+    <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
+  <div className="mb-6">
+    <SalleSelector onSelect={handleSalleSelect} />
+  </div>
+  <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
+    <FullCalendar
+      ref={calendarRef} // Associez la référence au composant FullCalendar
+      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+      initialView="dayGridMonth"
+      events={events}
+      headerToolbar={{
+        start: "prev,next today",
+        center: "title",
+        end: "dayGridMonth,timeGridWeek,timeGridDay",
+      }}
+      height={"90vh"}
+      selectable={true}
+      select={handleDateSelect}
+      eventClick={handleEventClick}
+      eventContent={renderEventContent} // Ajoutez cette ligne pour personnaliser l'affichage des événements
+      eventDidMount={handleEventMount}
+    />
+  </div>
+  {selectedDates.length > 0 && (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+      <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
+        <ReservationForm
+          selectedDates={selectedDates}
+          setEvents={setEvents}
+        />
+      </div>
+    </div>
+  )}
+  {selectedReservation && (
+    <div className="bg-white rounded-lg shadow-md p-4">
+      <EditForm
+        reservation={selectedReservation}
+        onSave={handleSaveReservation}
       />
-      {selectedDates.length > 0 && (
-        <div>
-          <ReservationForm
-            selectedDates={selectedDates}
-            setEvents={setEvents}
-          />
-        </div>
-      )}
-      {selectedReservation && (
-        <div>
-          <EditForm
-            reservation={selectedReservation}
-            onSave={handleSaveReservation}
-          />
-        </div>
-      )}
-    </>
+    </div>
+  )}
+</div>
+
+
   );
 };
 
