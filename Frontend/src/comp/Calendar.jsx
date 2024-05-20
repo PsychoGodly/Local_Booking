@@ -14,9 +14,10 @@ const Calendar = () => {
   const [events, setEvents] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
-  const calendarRef = useRef(null); // Create a reference for the FullCalendar component
-  const [showForm, setShowForm] = useState(false); // Change the initial value to false
-  
+  const calendarRef = useRef(null);
+  const [showForm, setShowForm] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -44,7 +45,7 @@ const Calendar = () => {
     const startDate = info.startStr;
     const endDate = info.endStr;
     setSelectedDates([{ startDate, endDate }]);
-    setShowForm(true); // Show the reservation form when a cell is selected
+    setShowForm(true);
     console.log("Selected date range:", info.startStr, " - ", info.endStr);
   };
 
@@ -67,7 +68,6 @@ const Calendar = () => {
         event.id === updatedReservation.id ? updatedReservation : event
       )
     );
-    // Update the event in the calendar immediately
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
       const event = calendarApi.getEventById(updatedReservation.id);
@@ -79,7 +79,11 @@ const Calendar = () => {
       }
     }
     setSelectedReservation(null);
-    setShowForm(false); // After saving the reservation, hide the form
+    setShowForm(false);
+    setSuccessMessage(true); // Set success message to true after saving the reservation
+    setTimeout(() => {
+      setSuccessMessage(false); // Set success message to false after 1 second
+    }, 1000);
   };
 
   const renderEventContent = (eventInfo) => {
@@ -101,20 +105,16 @@ const Calendar = () => {
   };
 
   const handleEventMount = (info) => {
-    // Get the DOM element of the event
     const eventEl = info.el;
-
-    // Add a pointer style on hover of the event
     eventEl.style.cursor = "pointer";
   };
 
   const handleSalleSelect = (salleId) => {
-    // You can use the selected room ID here
     console.log("Selected room:", salleId);
   };
-  
+
   const handleCancel = () => {
-    setShowForm(false); // Hide the form when the user cancels
+    setShowForm(false);
   };
 
   return (
@@ -124,7 +124,7 @@ const Calendar = () => {
       </div>
       <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
         <FullCalendar
-          ref={calendarRef} // Associate the reference with the FullCalendar component
+          ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           events={events}
@@ -137,11 +137,11 @@ const Calendar = () => {
           selectable={true}
           select={handleDateSelect}
           eventClick={handleEventClick}
-          eventContent={renderEventContent} // Add this line to customize the event display
+          eventContent={renderEventContent}
           eventDidMount={handleEventMount}
         />
       </div>
-      {showForm && ( // Show the form only if showForm is true
+      {showForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
             <ReservationForm
@@ -159,6 +159,11 @@ const Calendar = () => {
             reservation={selectedReservation}
             onSave={handleSaveReservation}
           />
+        </div>
+      )}
+      {successMessage && (
+        <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded">
+          Réservation créée avec succès!
         </div>
       )}
     </div>

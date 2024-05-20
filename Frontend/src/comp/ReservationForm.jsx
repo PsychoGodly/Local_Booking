@@ -46,13 +46,16 @@ const ReservationForm = ({ selectedDates, setEvents, onCancel }) => {
       setDuration(60);
       setColor("#ff0000");
       setReservationCreated(true);
+      setTimeout(() => {
+        setReservationCreated(false); // Reset reservationCreated after 1 second
+        onCancel(); // Return to the calendar after 1 second
+      }, 1000);
     } catch (error) {
       console.error("Error creating reservation:", error);
     }
   };
 
   const handleCancel = () => {
-    // Appeler la fonction onCancel pour indiquer à l'élément parent de gérer l'annulation
     onCancel();
   };
 
