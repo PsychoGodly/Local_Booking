@@ -33,7 +33,7 @@ const Calendar = () => {
         start: reservation.startTime,
         end: reservation.endTime,
         color: reservation.color,
-        user: reservation.user
+        user: reservation.user,
       }));
       setEvents(reservations);
     } catch (error) {
@@ -60,6 +60,7 @@ const Calendar = () => {
     };
     console.log("Reservation info:", reservationInfo);
     setSelectedReservation(reservationInfo);
+    setShowForm(true); // Ajoutez cette ligne pour afficher le formulaire lorsque vous cliquez sur une réservation existante
   };
 
   const handleSaveReservation = (updatedReservation) => {
@@ -88,8 +89,8 @@ const Calendar = () => {
 
   const renderEventContent = (eventInfo) => {
     const formatTime = (date) => {
-      const hours = date.getHours().toString().padStart(2, '0');
-      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
       return `${hours}:${minutes}`;
     };
 
@@ -99,7 +100,9 @@ const Calendar = () => {
       <div>
         <b>{eventInfo.event.title}</b>
         <br />
-        <p>[{startTime} - {endTime}]</p>
+        <p>
+          [{startTime} - {endTime}]
+        </p>
       </div>
     );
   };
@@ -155,17 +158,18 @@ const Calendar = () => {
           </div>
         </div>
       )}
-      {selectedReservation && (
+      {selectedReservation && showForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-        <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
-          <EditForm
-            reservation={selectedReservation}
-            onSave={handleSaveReservation}
-            onCancel={handleCancelEdit} 
-          />
-        </div>
+          <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
+            <EditForm
+              reservation={selectedReservation}
+              onSave={handleSaveReservation}
+              onCancel={handleCancelEdit}
+            />
+          </div>
         </div>
       )}
+
       {successMessage && (
         <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded">
           Réservation créée avec succès!
