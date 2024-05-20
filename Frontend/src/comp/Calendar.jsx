@@ -18,7 +18,8 @@ const Calendar = () => {
   const [showForm, setShowForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [selectedSalle, setSelectedSalle] = useState(null);
-
+  const [isNewReservation, setIsNewReservation] = useState(false); // Ajout de l'état pour suivre si la réservation est nouvelle ou non
+  
   useEffect(() => {
     if (selectedSalle) {
       fetchData(selectedSalle);
@@ -49,6 +50,7 @@ const Calendar = () => {
     const endDate = info.endStr;
     setSelectedDates([{ startDate, endDate }]);
     setShowForm(true);
+    setIsNewReservation(true);
     console.log("Selected date range:", info.startStr, " - ", info.endStr);
   };
 
@@ -63,6 +65,7 @@ const Calendar = () => {
     };
     console.log("Reservation info:", reservationInfo);
     setSelectedReservation(reservationInfo);
+    setIsNewReservation(false);
     setShowForm(true); // Show the form when clicking on an existing reservation
   };
 
@@ -157,7 +160,7 @@ const Calendar = () => {
           eventDidMount={handleEventMount}
         />
       </div>
-      {showForm && (
+      {showForm && isNewReservation && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
             <ReservationForm
@@ -170,7 +173,7 @@ const Calendar = () => {
           </div>
         </div>
       )}
-      {selectedReservation && showForm && (
+      {selectedReservation && !isNewReservation && showForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
             <EditForm
