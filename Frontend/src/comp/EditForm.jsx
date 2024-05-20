@@ -33,40 +33,61 @@ const EditForm = ({ reservation, onSave }) => {
   };
 
   return (
-    <div>
-      <h3>Modifier la réservation</h3>
-      <label>Date de début:</label>
-      <input
-        type="datetime-local"
-        value={new Date(editedReservation.startDate).toISOString().slice(0, 16)}
-        onChange={(e) => setEditedReservation({...editedReservation, startDate: e.target.value})}
-      />
-      <label>Date de fin:</label>
-      <input
-        type="datetime-local"
-        value={new Date(editedReservation.endDate).toISOString().slice(0, 16)}
-        onChange={(e) => setEditedReservation({...editedReservation, endDate: e.target.value})}
-      />
-      <label>Commentaire:</label>
-      <input
-        type="text"
-        value={editedReservation.comment}
-        onChange={(e) => setEditedReservation({...editedReservation, comment: e.target.value})}
-      />
-      <label>Durée (en minutes):</label>
-      <input
-        type="number"
-        value={editedReservation.duration}
-        onChange={(e) => setEditedReservation({...editedReservation, duration: e.target.value})}
-      />
-      <label>Couleur:</label>
-      <input
-        type="color"
-        value={editedReservation.color}
-        onChange={(e) => setEditedReservation({...editedReservation, color: e.target.value})}
-      />
-      <button onClick={handleSave}>Enregistrer</button>
-    </div>
+    <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-md">
+  <h3 className="text-lg font-medium mb-4">Modifier la réservation</h3>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Date de début:</label>
+    <input
+      type="datetime-local"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      value={new Date(editedReservation.startDate).toISOString().slice(0, 16)}
+      onChange={(e) => setEditedReservation({...editedReservation, startDate: e.target.value})}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Date de fin:</label>
+    <input
+      type="datetime-local"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      value={new Date(editedReservation.endDate).toISOString().slice(0, 16)}
+      onChange={(e) => setEditedReservation({...editedReservation, endDate: e.target.value})}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Commentaire:</label>
+    <input
+      type="text"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      value={editedReservation.comment}
+      onChange={(e) => setEditedReservation({...editedReservation, comment: e.target.value})}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Durée (en minutes):</label>
+    <input
+      type="number"
+      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+      value={editedReservation.duration}
+      onChange={(e) => setEditedReservation({...editedReservation, duration: e.target.value})}
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Couleur:</label>
+    <input
+      type="color"
+      className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md"
+      value={editedReservation.color}
+      onChange={(e) => setEditedReservation({...editedReservation, color: e.target.value})}
+    />
+  </div>
+  <button
+    onClick={handleSave}
+    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
+  >
+    Enregistrer
+  </button>
+</div>
+
   );
 };
 
