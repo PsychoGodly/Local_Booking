@@ -51,46 +51,67 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
   };
 
   return (
-    <div>
-      <h2>Réserver une réservation</h2>
-      {reservationCreated ? (
-        <p>Réservation créée avec succès!</p>
-      ) : (
-        <form onSubmit={handleFormSubmit}>
-          <label>Date de début:</label>
-          <input
-            type="datetime-local"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-          <label>Date de fin:</label>
-          <input
-            type="datetime-local"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-          <label>Commentaire:</label>
-          <input
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-          <label>Durée (en minutes):</label>
-          <input
-            type="number"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-          />
-          <label>Couleur:</label>
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-          />
-          <button type="submit">Réserver</button>
-        </form>
-      )}
-    </div>
+    <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">
+  <h2 className="text-2xl font-semibold mb-4">Réserver une réservation</h2>
+  {reservationCreated ? (
+    <p className="text-green-600 font-medium">Réservation créée avec succès!</p>
+  ) : (
+    <form onSubmit={handleFormSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-1">Date de début:</label>
+        <input
+          type="datetime-local"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Date de fin:</label>
+        <input
+          type="datetime-local"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Commentaire:</label>
+        <input
+          type="text"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Durée (en minutes):</label>
+        <input
+          type="number"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Couleur:</label>
+        <input
+          type="color"
+          className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
+      >
+        Réserver
+      </button>
+    </form>
+  )}
+</div>
+
   );
 };
 
