@@ -33,8 +33,8 @@ const Calendar = () => {
       const reservations = response.data.map((reservation) => ({
         id: reservation.id || uuidv4(),
         title: reservation.comment,
-        start: reservation.startTime,
-        end: reservation.endTime,
+        start: new Date(reservation.startTime),
+        end: new Date(reservation.endTime),
         color: reservation.color,
         user: reservation.user,
       }));
@@ -63,32 +63,38 @@ const Calendar = () => {
     };
     console.log("Reservation info:", reservationInfo);
     setSelectedReservation(reservationInfo);
-    setShowForm(true); // Ajoutez cette ligne pour afficher le formulaire lorsque vous cliquez sur une réservation existante
+    setShowForm(true); // Show the form when clicking on an existing reservation
   };
 
-  const handleSaveReservation = (updatedReservation) => {
-    setEvents((prevEvents) =>
-      prevEvents.map((event) =>
-        event.id === updatedReservation.id ? updatedReservation : event
-      )
-    );
-    if (calendarRef.current) {
-      const calendarApi = calendarRef.current.getApi();
-      const event = calendarApi.getEventById(updatedReservation.id);
-      if (event) {
-        event.setProp("title", updatedReservation.title);
-        event.setStart(updatedReservation.start);
-        event.setEnd(updatedReservation.end);
-        event.setProp("backgroundColor", updatedReservation.color);
-      }
+  const handleSaveReservation = async (newReservation) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/reservations?salleId=${selectedSalle}`,
+        newReservation
+      );
+      const savedReservation = response.data;
+      setEvents((prevEvents) => [
+        ...prevEvents,
+        {
+          id: savedReservation.id || uuidv4(),
+          title: savedReservation.comment,
+          start: savedReservation.startTime,
+          end: savedReservation.endTime,
+          color: savedReservation.color,
+          user: savedReservation.user,
+        },
+      ]);
+      setShowForm(false);
+      setSuccessMessage(true); // Set success message to true after saving the reservation
+      setTimeout(() => {
+        setSuccessMessage(false); // Set success message to false after 1 second
+      }, 1000);
+    } catch (error) {
+      console.error("Error saving reservation:", error);
     }
-    setSelectedReservation(null);
-    setShowForm(false);
-    setSuccessMessage(true); // Set success message to true after saving the reservation
-    setTimeout(() => {
-      setSuccessMessage(false); // Set success message to false after 1 second
-    }, 1000);
   };
+  
+  
 
   const renderEventContent = (eventInfo) => {
     const formatTime = (date) => {
@@ -158,6 +164,7 @@ const Calendar = () => {
               setEvents={setEvents}
               onCancel={handleCancel}
               onSave={handleSaveReservation}
+              salleId={selectedSalle}
             />
           </div>
         </div>

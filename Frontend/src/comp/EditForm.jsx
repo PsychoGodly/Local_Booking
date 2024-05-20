@@ -47,9 +47,7 @@ const EditForm = ({ reservation, onSave, onCancel }) => {
         <input
           type="datetime-local"
           className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          value={new Date(editedReservation.startDate)
-            .toISOString()
-            .slice(0, 16)}
+          value={new Date(editedReservation.startDate).toISOString().slice(0, 16)}
           onChange={(e) =>
             setEditedReservation({
               ...editedReservation,
