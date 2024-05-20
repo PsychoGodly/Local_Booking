@@ -116,7 +116,9 @@ const Calendar = () => {
   const handleCancel = () => {
     setShowForm(false);
   };
-
+  const handleCancelEdit = () => {
+    setShowForm(false);
+  };
   return (
     <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       <div className="mb-6">
@@ -154,11 +156,14 @@ const Calendar = () => {
         </div>
       )}
       {selectedReservation && (
-        <div className="bg-white rounded-lg shadow-md p-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+        <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
           <EditForm
             reservation={selectedReservation}
             onSave={handleSaveReservation}
+            onCancel={handleCancelEdit} 
           />
+        </div>
         </div>
       )}
       {successMessage && (
