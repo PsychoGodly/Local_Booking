@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ReservationForm = ({ selectedDates, setEvents }) => {
+const ReservationForm = ({ selectedDates, setEvents, onCancel }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
@@ -51,6 +51,11 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
     }
   };
 
+  const handleCancel = () => {
+    // Appeler la fonction onCancel pour indiquer à l'élément parent de gérer l'annulation
+    onCancel();
+  };
+
   return (
     <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Réserver une réservation</h2>
@@ -59,7 +64,7 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
           Réservation créée avec succès!
         </p>
       ) : (
-        <div className="space-y-4">
+        <form onSubmit={handleFormSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">
               Date de début:
@@ -117,19 +122,18 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
             <button
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
-              onClick={handleFormSubmit}
             >
               Réserver
             </button>
             <button
               type="button"
-              // onClick={handleCancel}
-              className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md"
+              onClick={handleCancel}
+              className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md mt-2"
             >
               Annuler
             </button>
           </div>
-        </div>
+        </form>
       )}
     </div>
   );

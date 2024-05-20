@@ -14,8 +14,9 @@ const Calendar = () => {
   const [events, setEvents] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
-  const calendarRef = useRef(null); // Créez une référence pour le composant FullCalendar
-
+  const calendarRef = useRef(null); // Create a reference for the FullCalendar component
+  const [showForm, setShowForm] = useState(false); // Change the initial value to false
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -43,7 +44,8 @@ const Calendar = () => {
     const startDate = info.startStr;
     const endDate = info.endStr;
     setSelectedDates([{ startDate, endDate }]);
-    console.log("Date sélectionnée:", info.startStr, " - ", info.endStr);
+    setShowForm(true); // Show the reservation form when a cell is selected
+    console.log("Selected date range:", info.startStr, " - ", info.endStr);
   };
 
   const handleEventClick = (clickInfo) => {
@@ -77,6 +79,7 @@ const Calendar = () => {
       }
     }
     setSelectedReservation(null);
+    setShowForm(false); // After saving the reservation, hide the form
   };
 
   const renderEventContent = (eventInfo) => {
@@ -98,63 +101,67 @@ const Calendar = () => {
   };
 
   const handleEventMount = (info) => {
-    // Récupérez l'élément DOM de l'événement
+    // Get the DOM element of the event
     const eventEl = info.el;
 
-    // Ajoutez un style de pointeur au survol de l'événement
+    // Add a pointer style on hover of the event
     eventEl.style.cursor = "pointer";
   };
 
   const handleSalleSelect = (salleId) => {
-    // Vous pouvez utiliser l'identifiant de la salle sélectionnée ici
-    console.log("Salle sélectionnée:", salleId);
+    // You can use the selected room ID here
+    console.log("Selected room:", salleId);
+  };
+  
+  const handleCancel = () => {
+    setShowForm(false); // Hide the form when the user cancels
   };
 
   return (
     <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
-  <div className="mb-6">
-    <SalleSelector onSelect={handleSalleSelect} />
-  </div>
-  <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
-    <FullCalendar
-      ref={calendarRef} // Associez la référence au composant FullCalendar
-      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-      initialView="dayGridMonth"
-      events={events}
-      headerToolbar={{
-        start: "prev,next today",
-        center: "title",
-        end: "dayGridMonth,timeGridWeek,timeGridDay",
-      }}
-      height={"90vh"}
-      selectable={true}
-      select={handleDateSelect}
-      eventClick={handleEventClick}
-      eventContent={renderEventContent} // Ajoutez cette ligne pour personnaliser l'affichage des événements
-      eventDidMount={handleEventMount}
-    />
-  </div>
-  {selectedDates.length > 0 && (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
-        <ReservationForm
-          selectedDates={selectedDates}
-          setEvents={setEvents}
+      <div className="mb-6">
+        <SalleSelector onSelect={handleSalleSelect} />
+      </div>
+      <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
+        <FullCalendar
+          ref={calendarRef} // Associate the reference with the FullCalendar component
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          events={events}
+          headerToolbar={{
+            start: "prev,next today",
+            center: "title",
+            end: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
+          height={"90vh"}
+          selectable={true}
+          select={handleDateSelect}
+          eventClick={handleEventClick}
+          eventContent={renderEventContent} // Add this line to customize the event display
+          eventDidMount={handleEventMount}
         />
       </div>
+      {showForm && ( // Show the form only if showForm is true
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
+            <ReservationForm
+              selectedDates={selectedDates}
+              setEvents={setEvents}
+              onCancel={handleCancel}
+              onSave={handleSaveReservation}
+            />
+          </div>
+        </div>
+      )}
+      {selectedReservation && (
+        <div className="bg-white rounded-lg shadow-md p-4">
+          <EditForm
+            reservation={selectedReservation}
+            onSave={handleSaveReservation}
+          />
+        </div>
+      )}
     </div>
-  )}
-  {selectedReservation && (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <EditForm
-        reservation={selectedReservation}
-        onSave={handleSaveReservation}
-      />
-    </div>
-  )}
-</div>
-
-
   );
 };
 
