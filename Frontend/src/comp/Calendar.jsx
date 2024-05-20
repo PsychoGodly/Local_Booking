@@ -111,11 +111,11 @@ const Calendar = () => {
   };
 
   return (
-    <div className="p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
+    <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
   <div className="mb-6">
     <SalleSelector onSelect={handleSalleSelect} />
   </div>
-  <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+  <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
     <FullCalendar
       ref={calendarRef} // Associez la référence au composant FullCalendar
       plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -135,11 +135,13 @@ const Calendar = () => {
     />
   </div>
   {selectedDates.length > 0 && (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-      <ReservationForm
-        selectedDates={selectedDates}
-        setEvents={setEvents}
-      />
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+      <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
+        <ReservationForm
+          selectedDates={selectedDates}
+          setEvents={setEvents}
+        />
+      </div>
     </div>
   )}
   {selectedReservation && (
@@ -151,6 +153,7 @@ const Calendar = () => {
     </div>
   )}
 </div>
+
 
   );
 };

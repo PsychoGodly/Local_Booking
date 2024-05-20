@@ -10,27 +10,28 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
   const [reservationCreated, setReservationCreated] = useState(false);
 
   useEffect(() => {
-
     setReservationCreated(false);
-    
+
     if (selectedDates.length > 0) {
       const { startDate, endDate } = selectedDates[0];
       setStartDate(startDate + "T09:00");
       setEndDate(endDate + "T10:00");
     }
-    
   }, [selectedDates]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/reservations", {
-        startTime: startDate,
-        endTime: endDate,
-        comment,
-        duration,
-        color,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/reservations",
+        {
+          startTime: startDate,
+          endTime: endDate,
+          comment,
+          duration,
+          color,
+        }
+      );
       console.log("Reservation created:", response.data);
       const newReservation = {
         title: response.data.comment,
@@ -38,7 +39,7 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
         end: response.data.endTime,
         color: response.data.color,
       };
-      setEvents(events => [...events, newReservation]);
+      setEvents((events) => [...events, newReservation]);
       setStartDate("");
       setEndDate("");
       setComment("");
@@ -52,66 +53,85 @@ const ReservationForm = ({ selectedDates, setEvents }) => {
 
   return (
     <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">
-  <h2 className="text-2xl font-semibold mb-4">Réserver une réservation</h2>
-  {reservationCreated ? (
-    <p className="text-green-600 font-medium">Réservation créée avec succès!</p>
-  ) : (
-    <form onSubmit={handleFormSubmit} className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium mb-1">Date de début:</label>
-        <input
-          type="datetime-local"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Date de fin:</label>
-        <input
-          type="datetime-local"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Commentaire:</label>
-        <input
-          type="text"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Durée (en minutes):</label>
-        <input
-          type="number"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Couleur:</label>
-        <input
-          type="color"
-          className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
-      >
-        Réserver
-      </button>
-    </form>
-  )}
-</div>
-
+      <h2 className="text-2xl font-semibold mb-4">Réserver une réservation</h2>
+      {reservationCreated ? (
+        <p className="text-green-600 font-medium">
+          Réservation créée avec succès!
+        </p>
+      ) : (
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Date de début:
+            </label>
+            <input
+              type="datetime-local"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Date de fin:
+            </label>
+            <input
+              type="datetime-local"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Commentaire:
+            </label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Durée (en minutes):
+            </label>
+            <input
+              type="number"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Couleur:</label>
+            <input
+              type="color"
+              className="w-full h-10 px-3 py-2 border border-gray-300 rounded-md"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
+              onClick={handleFormSubmit}
+            >
+              Réserver
+            </button>
+            <button
+              type="button"
+              // onClick={handleCancel}
+              className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md"
+            >
+              Annuler
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
