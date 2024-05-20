@@ -42,16 +42,17 @@ public class ReservationController {
         }
     }
 
+    // Endpoint pour insérer une nouvelle réservation
     @PostMapping("/reservations")
-    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation newReservation, @RequestParam Long salleId) {
+    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation newReservation) {
         try {
-            // Get the user from the database (you might want to change this logic)
+            // Get the first user from the database
             User user = userRepository.findAll().stream().findFirst()
                     .orElseThrow(() -> new RuntimeException("No user found"));
 
-            // Get the salle by salleId from the database
-            Salle salle = salleRepository.findById(salleId)
-                    .orElseThrow(() -> new RuntimeException("No salle found with id " + salleId));
+            // Get the first salle from the database
+            Salle salle = salleRepository.findAll().stream().findFirst()
+                    .orElseThrow(() -> new RuntimeException("No salle found"));
 
             // Set the user and salle for the reservation
             newReservation.setUser(user);
@@ -65,6 +66,7 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
 
 

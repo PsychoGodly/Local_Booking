@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
+const ReservationForm = ({ selectedDates, setEvents, onCancel }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
@@ -23,7 +23,7 @@ const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/reservations?salleId=${salleId}`,
+        "http://localhost:8080/api/reservations",
         {
           startTime: startDate,
           endTime: endDate,
@@ -34,7 +34,6 @@ const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
       );
       console.log("Reservation created:", response.data);
       const newReservation = {
-        id: response.data.id, // Ensure the event has a unique identifier
         title: response.data.comment,
         start: response.data.startTime,
         end: response.data.endTime,
