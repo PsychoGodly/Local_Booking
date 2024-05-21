@@ -24,7 +24,7 @@ const App = () => {
             <ReservationCalendar />
           </Route> */}
 
-          <Route path="/test">
+          <Route path="/">
             <Calendar />
           </Route>
         </Switch>
