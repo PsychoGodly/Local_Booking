@@ -137,6 +137,20 @@ const Calendar = () => {
     setShowForm(false);
   };
 
+
+  const handleDeleteReservation = async (reservationId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/reservations/${reservationId}`);
+      setEvents(prevEvents => prevEvents.filter(event => event.id !== reservationId));
+      setShowForm(false); // Close the form after deletion
+    } catch (error) {
+      console.error("Error deleting reservation:", error);
+    }
+  };
+  
+  
+  
+
   return (
     <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       <div className="mb-6">
@@ -187,6 +201,7 @@ const Calendar = () => {
               reservation={selectedReservation}
               onSave={handleSaveReservation}
               onCancel={handleCancelEdit}
+              onDelete={handleDeleteReservation}
             />
           </div>
         </div>
