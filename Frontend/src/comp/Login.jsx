@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
 
 const Login = () => {
@@ -71,38 +73,10 @@ const Login = () => {
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+              className="absolute inset-y-0 mt-5 right-0 pr-3 flex items-center text-sm leading-5"
               onClick={togglePasswordVisibility}
             >
-              {showPassword ? (
-                <svg
-                  className="h-5 w-5 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 12m4 0a9 9 0 11-18 0 9 9 0 0118 0zM15 12m2 2a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="h-5 w-5 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13.875 18.825a4 4 0 01-5.66-5.66M8.121 15.121A9.026 9.026 0 003 12a9 9 0 0118 0c0 1.494-.368 2.9-1.018 4.131m-2.272 1.272A9.026 9.026 0 0112 21c-1.494 0-2.9-.368-4.131-1.018m2.272-1.272a4 4 0 005.66-5.66M9.36 6.47a4 4 0 015.641 5.641"
-                  />
-                </svg>
-              )}
+              <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} className="text-gray-500" />
             </button>
             {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
           </div>
