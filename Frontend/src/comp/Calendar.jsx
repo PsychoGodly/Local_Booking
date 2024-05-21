@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import ReservationForm from "./ReservationForm";
 import EditForm from "./EditForm";
 import SalleSelector from "./SalleSelector";
-import placeholderImage from "./azura.png"; // Make sure to have a placeholder image in the same directory
+import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
