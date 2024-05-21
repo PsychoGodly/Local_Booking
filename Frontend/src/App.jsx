@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Calendar from "./comp/Calendar";
+import Login from "./comp/Login";
+
 // import Calendar from "./component/Calendar";
 // import Test from "./component/Test";
 
@@ -24,9 +26,15 @@ const App = () => {
             <ReservationCalendar />
           </Route> */}
 
+<Route path="/">
+            <Login />
+          </Route>
+
           <Route path="/">
             <Calendar />
           </Route>
+
+
         </Switch>
       </Router>
     </div>
