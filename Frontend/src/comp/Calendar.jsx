@@ -141,13 +141,15 @@ const Calendar = () => {
   const handleDeleteReservation = async (reservationId) => {
     try {
       await axios.delete(`http://localhost:8080/api/reservations/${reservationId}`);
-      setEvents(prevEvents => prevEvents.filter(event => event.id !== reservationId));
-      setShowForm(false); // Close the form after deletion
+      // Fetch updated data after deletion
+      fetchData(selectedSalle);
+      setShowForm(false)
     } catch (error) {
       console.error("Error deleting reservation:", error);
     }
   };
   
+
   
   
 

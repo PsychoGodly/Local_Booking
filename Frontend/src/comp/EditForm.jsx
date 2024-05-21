@@ -37,11 +37,11 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
   const handleDelete = async () => {
     try {
       await onDelete(reservation.id);
-      onCancel();
     } catch (error) {
       console.error("Error deleting reservation:", error);
     }
   };
+  
 
   return (
     <div className="p-4">
