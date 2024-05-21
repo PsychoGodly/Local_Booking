@@ -97,12 +97,7 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
         />
       </div>
       <div className="flex justify-between">
-        <button
-          onClick={handleSave}
-          className="w-1/3 bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md mr-2"
-        >
-          Enregistrer
-        </button>
+        
         <button
           onClick={onCancel}
           className="w-1/3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md mx-2"
@@ -114,6 +109,12 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
           className="w-1/3 bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md ml-2"
         >
           Supprimer
+        </button>
+        <button
+          onClick={handleSave}
+          className="w-1/3 bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md ml-2"
+        >
+          Enregistrer
         </button>
       </div>
     </div>
