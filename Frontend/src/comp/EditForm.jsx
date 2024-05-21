@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ConfirmDelete from "./ConfirmDelete";
-
 const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
+  // State variables
   const [editedReservation, setEditedReservation] = useState({
+    // Initialize editedReservation state with reservation data
     startDate: new Date(reservation.start).toISOString().slice(0, 16),
     endDate: new Date(reservation.end).toISOString().slice(0, 16),
     comment: reservation.title,
@@ -11,16 +12,19 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
     color: reservation.color,
   });
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false); // State for confirmation modal
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedReservation({ ...editedReservation, [name]: value });
   };
 
+  // Handle save action
   const handleSave = async () => {
     try {
+      // Send PUT request to update reservation
       const response = await axios.put(
         `http://localhost:8080/api/reservations/${reservation.id}`,
         {
@@ -32,7 +36,7 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
         }
       );
       onSave(response.data); // Update the parent state with modified data
-      setSuccessMessage('Réservation modifiée avec succès.');
+      setSuccessMessage('Réservation modifiée avec succès.'); // Show success message
       setTimeout(() => setSuccessMessage(''), 3000); // Remove message after 3 seconds
     } catch (error) {
       console.error("Erreur lors de la mise à jour de la réservation :", error);
@@ -40,23 +44,27 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
     }
   };
 
+  // Handle delete action
   const handleDelete = async () => {
-    setIsConfirmDeleteOpen(true);
+    setIsConfirmDeleteOpen(true); // Open confirmation modal
   };
 
+  // Confirm deletion
   const confirmDelete = async () => {
     try {
-      await onDelete(reservation.id);
+      await onDelete(reservation.id); // Send delete request
     } catch (error) {
       console.error("Error deleting reservation:", error);
     }
-    setIsConfirmDeleteOpen(false);
+    setIsConfirmDeleteOpen(false); // Close confirmation modal
   };
 
+  // Close confirmation modal
   const closeConfirmDelete = () => {
     setIsConfirmDeleteOpen(false);
   };
 
+  // Render the edit form
   return (
     <div className="p-4">
       <h3 className="text-lg font-semibold mb-4">Modifier la réservation</h3>
