@@ -42,7 +42,7 @@ const Login = () => {
               className={`border mb-2 py-2 px-3 rounded text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.username ? "border-red-500" : ''}`}
               name="username"
               type="text"
-              placeholder="e.g. some.example"
+              placeholder="e.g. houssam.elouafi@azura.ma"
               value={credentials.username}
               onChange={handleInputChange}
             />
@@ -65,7 +65,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-[#FA323D] hover:bg-[#003D1E] text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Sign in
           </button>
