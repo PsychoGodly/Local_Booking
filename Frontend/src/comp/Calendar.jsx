@@ -149,10 +149,6 @@ const Calendar = () => {
     }
   };
   
-
-  
-  
-
   return (
     <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       <div className="mb-6">
@@ -209,6 +205,8 @@ const Calendar = () => {
         </div>
       )}
 
+
+      {/*brrrrrrrrrrrron*/}
       {successMessage && (
         <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded">
           Réservation créée avec succès!
