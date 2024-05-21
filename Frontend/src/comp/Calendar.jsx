@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import ReservationForm from "./ReservationForm";
 import EditForm from "./EditForm";
 import SalleSelector from "./SalleSelector";
+import placeholderImage from "./azura.png"; // Make sure to have a placeholder image in the same directory
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
@@ -18,8 +19,8 @@ const Calendar = () => {
   const [showForm, setShowForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [selectedSalle, setSelectedSalle] = useState(null);
-  const [isNewReservation, setIsNewReservation] = useState(false); // Ajout de l'état pour suivre si la réservation est nouvelle ou non
-  
+  const [isNewReservation, setIsNewReservation] = useState(false);
+
   useEffect(() => {
     if (selectedSalle) {
       fetchData(selectedSalle);
@@ -47,11 +48,13 @@ const Calendar = () => {
 
   const handleDateSelect = (info) => {
     const startDate = info.startStr;
-    const endDate = info.endStr;
+    const endDate = info.endStr.substring(0, 10) === startDate.substring(0, 10)
+      ? startDate
+      : new Date(new Date(info.endStr).setDate(new Date(info.endStr).getDate() - 1)).toISOString().substring(0, 10);
     setSelectedDates([{ startDate, endDate }]);
     setShowForm(true);
     setIsNewReservation(true);
-    console.log("Selected date range:", info.startStr, " - ", info.endStr);
+    console.log("Selected date range:", startDate, " - ", endDate);
   };
 
   const handleEventClick = (clickInfo) => {
@@ -96,8 +99,6 @@ const Calendar = () => {
       console.error("Error saving reservation:", error);
     }
   };
-  
-  
 
   const renderEventContent = (eventInfo) => {
     const formatTime = (date) => {
@@ -141,25 +142,31 @@ const Calendar = () => {
       <div className="mb-6">
         <SalleSelector onSelect={handleSalleSelect} />
       </div>
-      <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          events={events}
-          headerToolbar={{
-            start: "prev,next today",
-            center: "title",
-            end: "dayGridMonth,timeGridWeek,timeGridDay",
-          }}
-          height={"90vh"}
-          selectable={true}
-          select={handleDateSelect}
-          eventClick={handleEventClick}
-          eventContent={renderEventContent}
-          eventDidMount={handleEventMount}
-        />
-      </div>
+      {!selectedSalle ? (
+        <div className="flex items-center justify-center">
+          <img src={placeholderImage} alt="Placeholder" className="w-1/2 h-1/2 object-contain" />
+        </div>
+      ) : (
+        <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
+          <FullCalendar
+            ref={calendarRef}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            events={events}
+            headerToolbar={{
+              start: "prev,next today",
+              center: "title",
+              end: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
+            height={"90vh"}
+            selectable={true}
+            select={handleDateSelect}
+            eventClick={handleEventClick}
+            eventContent={renderEventContent}
+            eventDidMount={handleEventMount}
+          />
+        </div>
+      )}
       {showForm && isNewReservation && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
