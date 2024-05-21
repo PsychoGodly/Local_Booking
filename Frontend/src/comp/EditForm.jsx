@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ConfirmDelete from "./ConfirmDelete";
 
 const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
   const [editedReservation, setEditedReservation] = useState({
@@ -11,6 +12,7 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
   });
 
   const [successMessage, setSuccessMessage] = useState('');
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,14 +41,20 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette réservation ?");
-    if (confirmed) {
-      try {
-        await onDelete(reservation.id);
-      } catch (error) {
-        console.error("Error deleting reservation:", error);
-      }
+    setIsConfirmDeleteOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await onDelete(reservation.id);
+    } catch (error) {
+      console.error("Error deleting reservation:", error);
     }
+    setIsConfirmDeleteOpen(false);
+  };
+
+  const closeConfirmDelete = () => {
+    setIsConfirmDeleteOpen(false);
   };
 
   return (
@@ -127,6 +135,13 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
           Supprimer
         </button>
       </div>
+      <ConfirmDelete
+        isOpen={isConfirmDeleteOpen}
+        onClose={closeConfirmDelete}
+        onConfirm={confirmDelete}
+        title="Confirmer la suppression"
+        message="Êtes-vous sûr de vouloir supprimer cette réservation ?"
+      />
     </div>
   );
 };
