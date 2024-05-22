@@ -1,6 +1,8 @@
 package org.example.backend.Controller;
 
+import jakarta.transaction.Transactional;
 import org.example.backend.DTO.HolidayDTO;
+import org.example.backend.Repository.HolidayRepository;
 import org.example.backend.Service.ApiService;
 import org.example.backend.Service.HolidayService;
 import org.example.backend.model.Holiday;
@@ -12,11 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-
 public class HolidayController {
     private final ApiService apiService;
     private final HolidayService holidayService;
-
+    private HolidayRepository holidayRepository;
     public HolidayController(ApiService apiService, HolidayService holidayService) {
         this.apiService = apiService;
         this.holidayService = holidayService;
@@ -35,7 +36,7 @@ public class HolidayController {
     }
 
     @GetMapping("/holidays")
-    public List<Holiday> getHolidays() {
+    public List<Holiday> getAllHolidays() {
         return holidayService.findAll();
     }
 }
