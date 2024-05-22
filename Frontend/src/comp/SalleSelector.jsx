@@ -19,6 +19,7 @@ const SalleSelector = ({ onSelect }) => {
         console.error("Error fetching salles:", error);
       }
     };
+    
 
     fetchSalles();
   }, []); // Empty dependency array means this effect runs only once after the initial render
@@ -29,8 +30,10 @@ const SalleSelector = ({ onSelect }) => {
     const salleId = e.target.value;
     // Update the selected room in state
     setSelectedSalle(salleId);
+
     // Call the onSelect function with the selected room's ID
     onSelect(salleId);
+
   };
 
   return (
