@@ -12,7 +12,6 @@ import SalleSelector from "./SalleSelector";
 import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
 
 const Calendar = () => {
-  // State variables
   const [events, setEvents] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
@@ -22,14 +21,12 @@ const Calendar = () => {
   const [selectedSalle, setSelectedSalle] = useState(null);
   const [isNewReservation, setIsNewReservation] = useState(false);
 
-  // Fetch data when selectedSalle changes
   useEffect(() => {
     if (selectedSalle) {
       fetchData(selectedSalle);
     }
   }, [selectedSalle]);
 
-  // Function to fetch reservations data
   const fetchData = async (salleId) => {
     try {
       const response = await axios.get(
@@ -49,7 +46,6 @@ const Calendar = () => {
     }
   };
 
-  // Handle date selection on the calendar
   const handleDateSelect = (info) => {
     const startDate = info.startStr;
     const endDate = info.endStr.substring(0, 10) === startDate.substring(0, 10)
@@ -61,7 +57,6 @@ const Calendar = () => {
     console.log("Selected date range:", startDate, " - ", endDate);
   };
 
-  // Handle click on an existing event
   const handleEventClick = (clickInfo) => {
     console.log("Event clicked:", clickInfo.event);
     const reservationInfo = {
@@ -77,7 +72,6 @@ const Calendar = () => {
     setShowForm(true); // Show the form when clicking on an existing reservation
   };
 
-  // Handle saving a reservation
   const handleSaveReservation = async (newReservation) => {
     try {
       const response = await axios.post(
@@ -106,7 +100,6 @@ const Calendar = () => {
     }
   };
 
-  // Render content of an event on the calendar
   const renderEventContent = (eventInfo) => {
     const formatTime = (date) => {
       const hours = date.getHours().toString().padStart(2, "0");
@@ -127,19 +120,16 @@ const Calendar = () => {
     );
   };
 
-  // Set cursor pointer for events
   const handleEventMount = (info) => {
     const eventEl = info.el;
     eventEl.style.cursor = "pointer";
   };
 
-  // Handle selection of a salle (room)
   const handleSalleSelect = (salleId) => {
     console.log("Selected room:", salleId);
     setSelectedSalle(salleId);
   };
 
-  // Handle cancellation of reservation form
   const handleCancel = () => {
     setShowForm(false);
   };
@@ -147,7 +137,7 @@ const Calendar = () => {
     setShowForm(false);
   };
 
-  // Handle deletion of a reservation
+
   const handleDeleteReservation = async (reservationId) => {
     try {
       await axios.delete(`http://localhost:8080/api/reservations/${reservationId}`);
@@ -192,7 +182,8 @@ const Calendar = () => {
       {showForm && isNewReservation && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
-            <ReservationForm              selectedDates={selectedDates}
+            <ReservationForm
+              selectedDates={selectedDates}
               setEvents={setEvents}
               onCancel={handleCancel}
               onSave={handleSaveReservation}
@@ -215,7 +206,7 @@ const Calendar = () => {
       )}
 
 
-      {/* Success message for reservation creation */}
+      {/*brrrrrrrrrrrron*/}
       {successMessage && (
         <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded">
           Réservation créée avec succès!
@@ -226,4 +217,3 @@ const Calendar = () => {
 };
 
 export default Calendar;
-

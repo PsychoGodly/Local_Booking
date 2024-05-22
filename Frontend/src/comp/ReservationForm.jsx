@@ -2,30 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
-  // State variables for form inputs and UI state
-  const [startDate, setStartDate] = useState(""); // Start date of the reservation
-  const [endDate, setEndDate] = useState(""); // End date of the reservation
-  const [comment, setComment] = useState(""); // Comment for the reservation
-  const [duration, setDuration] = useState(60); // Duration of the reservation in minutes
-  const [color, setColor] = useState("#ff0000"); // Color for the reservation
-  const [reservationCreated, setReservationCreated] = useState(false); // Flag to indicate if reservation has been successfully created
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [comment, setComment] = useState("");
+  const [duration, setDuration] = useState(60);
+  const [color, setColor] = useState("#ff0000");
+  const [reservationCreated, setReservationCreated] = useState(false);
 
-  // Effect to update form inputs when selected dates change
   useEffect(() => {
     setReservationCreated(false);
 
     if (selectedDates.length > 0) {
       const { startDate, endDate } = selectedDates[0];
-      setStartDate(startDate + "T09:00"); // Set start date to 9:00 AM
-      setEndDate(endDate + "T10:00"); // Set end date to 10:00 AM
+      setStartDate(startDate + "T09:00");
+      setEndDate(endDate + "T10:00");
     }
   }, [selectedDates]);
 
-  // Handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send reservation data to the server
       const response = await axios.post(
         `http://localhost:8080/api/reservations?salleId=${salleId}`,
         {
@@ -37,8 +33,6 @@ const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
         }
       );
       console.log("Reservation created:", response.data);
-
-      // Construct a new reservation object
       const newReservation = {
         id: response.data.id, // Ensure the event has a unique identifier
         title: response.data.comment,
@@ -46,18 +40,12 @@ const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
         end: response.data.endTime,
         color: response.data.color,
       };
-
-      // Add the new reservation to the events array
       setEvents((events) => [...events, newReservation]);
-
-      // Reset form inputs
       setStartDate("");
       setEndDate("");
       setComment("");
       setDuration(60);
       setColor("#ff0000");
-
-      // Set reservation created flag to true and reset it after 1 second
       setReservationCreated(true);
       setTimeout(() => {
         setReservationCreated(false); // Reset reservationCreated after 1 second
@@ -68,7 +56,6 @@ const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
     }
   };
 
-  // Handle cancel button click
   const handleCancel = () => {
     onCancel();
   };
