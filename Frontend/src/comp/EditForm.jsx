@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import ConfirmDelete from "./ConfirmDelete";
 const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
+  // State variables
   const [editedReservation, setEditedReservation] = useState({
+    // Initialize editedReservation state with reservation data
     startDate: new Date(reservation.start).toISOString().slice(0, 16),
     endDate: new Date(reservation.end).toISOString().slice(0, 16),
     comment: reservation.title,
@@ -10,13 +12,19 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
     color: reservation.color,
   });
 
+  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false); // State for confirmation modal
+
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedReservation({ ...editedReservation, [name]: value });
   };
 
+  // Handle save action
   const handleSave = async () => {
     try {
+      // Send PUT request to update reservation
       const response = await axios.put(
         `http://localhost:8080/api/reservations/${reservation.id}`,
         {
@@ -27,25 +35,44 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
           color: editedReservation.color,
         }
       );
-      onSave(response.data); // Mettre à jour le state parent avec les données modifiées
+      onSave(response.data); // Update the parent state with modified data
+      setSuccessMessage('Réservation modifiée avec succès.'); // Show success message
+      setTimeout(() => setSuccessMessage(''), 3000); // Remove message after 3 seconds
     } catch (error) {
       console.error("Erreur lors de la mise à jour de la réservation :", error);
-      // Afficher un message d'erreur à l'utilisateur ou gérer l'erreur d'une autre manière
+      // Display an error message to the user or handle the error in another way
     }
   };
 
+  // Handle delete action
   const handleDelete = async () => {
+    setIsConfirmDeleteOpen(true); // Open confirmation modal
+  };
+
+  // Confirm deletion
+  const confirmDelete = async () => {
     try {
-      await onDelete(reservation.id);
+      await onDelete(reservation.id); // Send delete request
     } catch (error) {
       console.error("Error deleting reservation:", error);
     }
+    setIsConfirmDeleteOpen(false); // Close confirmation modal
   };
-  
 
+  // Close confirmation modal
+  const closeConfirmDelete = () => {
+    setIsConfirmDeleteOpen(false);
+  };
+
+  // Render the edit form
   return (
     <div className="p-4">
       <h3 className="text-lg font-semibold mb-4">Modifier la réservation</h3>
+      {successMessage && (
+        <div className="mb-4 p-2 bg-green-100 text-green-700 border border-green-400 rounded">
+          {successMessage}
+        </div>
+      )}
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">Date de début:</label>
         <input
@@ -97,12 +124,7 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
         />
       </div>
       <div className="flex justify-between">
-        <button
-          onClick={handleSave}
-          className="w-1/3 bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md mr-2"
-        >
-          Enregistrer
-        </button>
+        
         <button
           onClick={onCancel}
           className="w-1/3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md mx-2"
@@ -115,7 +137,20 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
         >
           Supprimer
         </button>
+        <button
+          onClick={handleSave}
+          className="w-1/3 bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md ml-2"
+        >
+          Enregistrer
+        </button>
       </div>
+      <ConfirmDelete
+        isOpen={isConfirmDeleteOpen}
+        onClose={closeConfirmDelete}
+        onConfirm={confirmDelete}
+        title="Confirmer la suppression"
+        message="Êtes-vous sûr de vouloir supprimer cette réservation ?"
+      />
     </div>
   );
 };
