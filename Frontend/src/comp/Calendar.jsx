@@ -96,6 +96,9 @@ const handleDateSelect = (info) => {
     setShowForm(false); // Do not show the form
     // Display error message to the user
     setErrorMessage("You cannot reserve a salle on a holiday.");
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 1000);
   } else {
     // If no cell within the selected range corresponds to a holiday
     setSelectedDates([{ startDate, endDate }]);
