@@ -22,6 +22,7 @@
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
     "axios": "^1.7.0",
+    "flowbite-react": "^0.9.0",
     "install": "^0.13.0",
     "npm": "^10.8.0",
     "react": "^18.2.0",
