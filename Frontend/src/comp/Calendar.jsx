@@ -75,6 +75,7 @@ const Calendar = () => {
 
   // Handle date selection on the calendar
 // Handle date selection on the calendar
+// Handle date selection on the calendar
 const handleDateSelect = (info) => {
   const startDate = info.startStr;
   const endDate =
@@ -82,19 +83,29 @@ const handleDateSelect = (info) => {
       ? startDate
       : new Date(new Date(info.endStr).setDate(new Date(info.endStr).getDate() - 1)).toISOString().substring(0, 10);
 
-  // Check if the selected date is a holiday
-  const isHoliday = combinedEvents.some(
-    (event) => event.isHoliday && event.start.toISOString().substring(0, 10) === startDate.substring(0, 10)
+  // Check if any cell within the selected range corresponds to a holiday
+  const isHolidayInRange = combinedEvents.some(
+    (event) =>
+      event.isHoliday &&
+      (event.start >= info.start && event.start <= info.end) // Check if holiday is within the selected range
   );
 
-  if (!isHoliday) {
+  if (isHolidayInRange) {
+    // If any cell within the selected range corresponds to a holiday
+    setShowForm(false); // Do not show the form
+    // Display error message to the user
+    alert("You cannot reserve a salle on a holiday.");
+  } else {
+    // If no cell within the selected range corresponds to a holiday
     setSelectedDates([{ startDate, endDate }]);
-    setShowForm(true);
+    setShowForm(true); // Show the form
     setIsNewReservation(true);
     console.log("Selected date range:", startDate, " - ", endDate);
   }
 };
 
+
+// Handle click on an existing event
 // Handle click on an existing event
 const handleEventClick = (clickInfo) => {
   // Check if the clicked event is a holiday
