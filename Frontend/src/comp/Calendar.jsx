@@ -281,7 +281,9 @@ const handleEventClick = (clickInfo) => {
 
       {errorMessage && (
         <>
-          <p>{errorMessage}</p>
+          <div className="absolute top-4 right-4 bg-red-800 text-white p-2 rounded">
+            {errorMessage}
+          </div>
         </>
       )}
     </div>
