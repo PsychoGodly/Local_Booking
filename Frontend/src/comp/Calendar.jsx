@@ -163,12 +163,9 @@ const handleEventClick = (clickInfo) => {
   const renderEventContent = (eventInfo) => {
     const formatTime = (date) => {
       if (!date) return ""; // Return empty string if date is null or undefined
-      return date.toLocaleString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-        timeZone: "UTC", // Set the timezone to UTC to ensure consistency
-      });
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
     };
 
     const startTime = formatTime(eventInfo.event.start);
