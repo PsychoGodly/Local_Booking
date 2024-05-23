@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash,faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
 
 const Login = () => {
@@ -43,21 +43,34 @@ const Login = () => {
           <img src={placeholderImage} alt="Logo" className="h-auto w-30" />
         </div>
         <form onSubmit={handleLoginForm} className="space-y-6">
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Email
-            </label>
-            <input
-              id="username"
-              className={`border mb-2 py-2 px-3 rounded text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.username ? "border-red-500" : ''}`}
-              name="username"
-              type="text"
-              placeholder="e.g. houssam.elouafi@azura.ma"
-              value={credentials.username}
-              onChange={handleInputChange}
-            />
-            {errors.username && <p className="text-red-500 text-xs italic">{errors.username}</p>}
-          </div>
+        <div className="relative mb-4">
+  <label
+    className="block text-gray-700 text-sm font-bold mb-2"
+    htmlFor="username"
+  >
+    Email
+  </label>
+  <div className="relative">
+    <input
+      id="username"
+      className={`border py-2 px-3 rounded text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.username ? "border-red-500" : "border-gray-300"}`}
+      name="username"
+      type="text"
+      placeholder="e.g. houssam.elouafi@azura.ma"
+      value={credentials.username}
+      onChange={handleInputChange}
+    />
+    <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+      <FontAwesomeIcon icon={faEnvelope} className="text-gray-500" />
+    </div>
+  </div>
+  {errors.username && (
+    <p className="text-red-500 text-xs italic mt-1">
+      {errors.username}
+    </p>
+  )}
+</div>
+
           <div className="relative">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
               Password
