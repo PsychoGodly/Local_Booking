@@ -61,7 +61,7 @@ const Calendar = () => {
         title: holiday.name,
         start: new Date(holiday.date),
         end: new Date(holiday.date),
-        color: 'red',
+        color: 'gray',
         allDay: true,
         isHoliday: true,
       }));
@@ -75,8 +75,6 @@ const Calendar = () => {
   const combinedEvents = [...events, ...holidays];
 
   // Handle date selection on the calendar
-// Handle date selection on the calendar
-// Handle date selection on the calendar
 const handleDateSelect = (info) => {
   const startDate = info.startStr;
   const endDate =
@@ -172,6 +170,7 @@ const handleEventClick = (clickInfo) => {
 
     const startTime = formatTime(eventInfo.event.start);
     const endTime = formatTime(eventInfo.event.end);
+
     return (
       <div>
         <b>{eventInfo.event.title}</b>
