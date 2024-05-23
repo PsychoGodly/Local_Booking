@@ -85,20 +85,27 @@ const Calendar = () => {
   };
 
   // Handle click on an existing event
-  const handleEventClick = (clickInfo) => {
-    console.log("Event clicked:", clickInfo.event);
-    const reservationInfo = {
-      id: clickInfo.event.id,
-      title: clickInfo.event.title,
-      start: clickInfo.event.start,
-      end: clickInfo.event.end,
-      color: clickInfo.event.backgroundColor,
-    };
-    console.log("Reservation info:", reservationInfo);
-    setSelectedReservation(reservationInfo);
-    setIsNewReservation(false);
-    setShowForm(true); // Show the form when clicking on an existing reservation
+// Handle click on an existing event
+const handleEventClick = (clickInfo) => {
+  // Check if the clicked event is a holiday
+  if (clickInfo.event.backgroundColor === 'red') {
+    return; // Do nothing if it's a holiday
+  }
+
+  console.log("Event clicked:", clickInfo.event);
+  const reservationInfo = {
+    id: clickInfo.event.id,
+    title: clickInfo.event.title,
+    start: clickInfo.event.start,
+    end: clickInfo.event.end,
+    color: clickInfo.event.backgroundColor,
   };
+  console.log("Reservation info:", reservationInfo);
+  setSelectedReservation(reservationInfo);
+  setIsNewReservation(false);
+  setShowForm(true); // Show the form when clicking on an existing reservation
+};
+
 
   // Handle saving a reservation
   const handleSaveReservation = async (newReservation) => {
