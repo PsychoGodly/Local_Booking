@@ -4,25 +4,32 @@ import Calendar from "./comp/Calendar";
 import Login from "./comp/Login";
 import SidebarComponent from "./comp/SideBar";
 
-
 const App = () => {
   return (
     <div className="app-container">
       <Router>
-        <div className="sidebar">
-          <SidebarComponent />
-        </div>
-        <div className="main-content">
-          <Switch>
-            <Route path="/auth">
-              <Login />
-            </Route>
-            <Route path="/calendar">
-              <Calendar />
-            </Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/auth">
+            <Login />
+          </Route>
+          <Route path="/">
+            <CalendarLayout />
+          </Route>
+        </Switch>
       </Router>
+    </div>
+  );
+};
+
+const CalendarLayout = () => {
+  return (
+    <div className="calendar-layout">
+      <div className="sidebar">
+        <SidebarComponent />
+      </div>
+      <div className="main-content">
+        <Calendar />
+      </div>
     </div>
   );
 };
