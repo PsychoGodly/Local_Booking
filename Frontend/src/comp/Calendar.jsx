@@ -14,6 +14,7 @@ import placeholderImage from "../assets/azura.png"; // Make sure to have a place
 const Calendar = () => {
   // State variables
   const [events, setEvents] = useState([]);
+  const [holidays, setHolidays] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const calendarRef = useRef(null);
@@ -27,6 +28,7 @@ const Calendar = () => {
     if (selectedSalle) {
       fetchData(selectedSalle);
     }
+    fetchHolidays(); // Fetch holidays data
   }, [selectedSalle]);
 
   // Function to fetch reservations data
@@ -48,6 +50,27 @@ const Calendar = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  // Function to fetch holidays data
+  const fetchHolidays = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/holidays`);
+      const holidaysData = response.data.map((holiday) => ({
+        id: holiday.id || uuidv4(),
+        title: holiday.name,
+        start: new Date(holiday.date),
+        end: new Date(holiday.date),
+        color: 'red',
+        allDay: true,
+      }));
+      setHolidays(holidaysData);
+    } catch (error) {
+      console.error("Error fetching holidays data:", error);
+    }
+  };
+
+  // Combine reservations and holidays for the calendar
+  const combinedEvents = [...events, ...holidays];
 
   // Handle date selection on the calendar
   const handleDateSelect = (info) => {
@@ -109,6 +132,7 @@ const Calendar = () => {
   // Render content of an event on the calendar
   const renderEventContent = (eventInfo) => {
     const formatTime = (date) => {
+      if (!date) return ""; // Return empty string if date is null or undefined
       const hours = date.getHours().toString().padStart(2, "0");
       const minutes = date.getMinutes().toString().padStart(2, "0");
       return `${hours}:${minutes}`;
@@ -120,9 +144,13 @@ const Calendar = () => {
       <div>
         <b>{eventInfo.event.title}</b>
         <br />
-        <p>
-          [{startTime} - {endTime}]
-        </p>
+        {eventInfo.event.allDay ? (
+          <p>All Day</p>
+        ) : (
+          <p>
+            [{startTime} - {endTime}]
+          </p>
+        )}
       </div>
     );
   };
@@ -158,7 +186,7 @@ const Calendar = () => {
       console.error("Error deleting reservation:", error);
     }
   };
-  
+
   return (
     <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       <div className="mb-6">
@@ -174,7 +202,7 @@ const Calendar = () => {
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            events={events}
+            events={combinedEvents}
             headerToolbar={{
               start: "prev,next today",
               center: "title",
@@ -192,7 +220,8 @@ const Calendar = () => {
       {showForm && isNewReservation && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
-            <ReservationForm              selectedDates={selectedDates}
+            <ReservationForm              
+              selectedDates={selectedDates}
               setEvents={setEvents}
               onCancel={handleCancel}
               onSave={handleSaveReservation}
@@ -214,7 +243,6 @@ const Calendar = () => {
         </div>
       )}
 
-
       {/* Success message for reservation creation */}
       {successMessage && (
         <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded">
@@ -226,4 +254,3 @@ const Calendar = () => {
 };
 
 export default Calendar;
-
