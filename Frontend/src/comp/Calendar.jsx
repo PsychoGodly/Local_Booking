@@ -22,6 +22,7 @@ const Calendar = () => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [selectedSalle, setSelectedSalle] = useState(null);
   const [isNewReservation, setIsNewReservation] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Fetch data when selectedSalle changes
   useEffect(() => {
@@ -94,7 +95,7 @@ const handleDateSelect = (info) => {
     // If any cell within the selected range corresponds to a holiday
     setShowForm(false); // Do not show the form
     // Display error message to the user
-    alert("You cannot reserve a salle on a holiday.");
+    setErrorMessage("You cannot reserve a salle on a holiday.");
   } else {
     // If no cell within the selected range corresponds to a holiday
     setSelectedDates([{ startDate, endDate }]);
@@ -276,6 +277,12 @@ const handleEventClick = (clickInfo) => {
         <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded">
           Réservation créée avec succès!
         </div>
+      )}
+
+      {errorMessage && (
+        <>
+          <p>{errorMessage}</p>
+        </>
       )}
     </div>
   );
