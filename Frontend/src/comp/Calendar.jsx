@@ -62,6 +62,7 @@ const Calendar = () => {
         end: new Date(holiday.date),
         color: 'red',
         allDay: true,
+        isHoliday: true,
       }));
       setHolidays(holidaysData);
     } catch (error) {
@@ -74,6 +75,7 @@ const Calendar = () => {
 
   // Handle date selection on the calendar
   const handleDateSelect = (info) => {
+   
     const startDate = info.startStr;
     const endDate = info.endStr.substring(0, 10) === startDate.substring(0, 10)
       ? startDate
@@ -85,10 +87,9 @@ const Calendar = () => {
   };
 
   // Handle click on an existing event
-// Handle click on an existing event
 const handleEventClick = (clickInfo) => {
   // Check if the clicked event is a holiday
-  if (clickInfo.event.backgroundColor === 'red') {
+  if (clickInfo.event.extendedProps.isHoliday) {
     return; // Do nothing if it's a holiday
   }
 
