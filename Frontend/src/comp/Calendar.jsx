@@ -74,19 +74,28 @@ const Calendar = () => {
   const combinedEvents = [...events, ...holidays];
 
   // Handle date selection on the calendar
-  const handleDateSelect = (info) => {
-   
-    const startDate = info.startStr;
-    const endDate = info.endStr.substring(0, 10) === startDate.substring(0, 10)
+// Handle date selection on the calendar
+const handleDateSelect = (info) => {
+  const startDate = info.startStr;
+  const endDate =
+    info.endStr.substring(0, 10) === startDate.substring(0, 10)
       ? startDate
       : new Date(new Date(info.endStr).setDate(new Date(info.endStr).getDate() - 1)).toISOString().substring(0, 10);
+
+  // Check if the selected date is a holiday
+  const isHoliday = combinedEvents.some(
+    (event) => event.isHoliday && event.start.toISOString().substring(0, 10) === startDate.substring(0, 10)
+  );
+
+  if (!isHoliday) {
     setSelectedDates([{ startDate, endDate }]);
     setShowForm(true);
     setIsNewReservation(true);
     console.log("Selected date range:", startDate, " - ", endDate);
-  };
+  }
+};
 
-  // Handle click on an existing event
+// Handle click on an existing event
 const handleEventClick = (clickInfo) => {
   // Check if the clicked event is a holiday
   if (clickInfo.event.extendedProps.isHoliday) {
