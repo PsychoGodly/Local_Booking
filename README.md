@@ -154,7 +154,10 @@ Ensure you have the following software installed:
 - Java JDK 17+
 - Maven
 - PostgreSQL or MySQL database
-- XAMPP (local Database)
+  #### Local Deployemnt
+- XAMPP | Local Database
+- Visual Studio Code | Frontend
+- Intellij IDEA | Backend
 
 ### Install the dependencies 
 ```
