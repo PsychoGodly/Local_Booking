@@ -10,14 +10,33 @@
 
 
 
-[![Features](https://img.shields.io/badge/Features-cyan)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#features)
-[![Beta Version Changelogs](https://img.shields.io/badge/Beta%20Version%20Changelogs-orange)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#beta-version-changelogs)
-[![Stable Version Changelogs](https://img.shields.io/badge/Stable%20Version%20Changelogs-lightgreen)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#stable-version-changelogs)
-[![Tech](https://img.shields.io/badge/Tech-yellow)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#tech)
-[![Download](https://img.shields.io/badge/Download-green)](https://github.com/PsychoGodly/Local_Booking/releases)
-[![Installation](https://img.shields.io/badge/Installation-orange)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#installation)
-[![Run](https://img.shields.io/badge/Run-red)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#run)
-[![License](https://img.shields.io/badge/License-lightgrey)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#license)
+<div align="center">
+    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#features">
+        <img src="https://img.shields.io/badge/Features-cyan" alt="Features">
+    </a>
+    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#beta-version-changelogs">
+        <img src="https://img.shields.io/badge/Beta%20Version%20Changelogs-orange" alt="Beta Version Changelogs">
+    </a>
+    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#stable-version-changelogs">
+        <img src="https://img.shields.io/badge/Stable%20Version%20Changelogs-lightgreen" alt="Stable Version Changelogs">
+    </a>
+    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#tech">
+        <img src="https://img.shields.io/badge/Tech-yellow" alt="Tech">
+    </a>
+    <a href="https://github.com/PsychoGodly/Local_Booking/releases">
+        <img src="https://img.shields.io/badge/Download-green" alt="Download">
+    </a>
+    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#installation">
+        <img src="https://img.shields.io/badge/Installation-orange" alt="Installation">
+    </a>
+    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#run">
+        <img src="https://img.shields.io/badge/Run-red" alt="Run">
+    </a>
+    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#license">
+        <img src="https://img.shields.io/badge/License-lightgrey" alt="License">
+    </a>
+</div>
+
 
 
 
