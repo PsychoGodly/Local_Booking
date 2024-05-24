@@ -262,7 +262,7 @@ cd frontend
 ```
 npm run dev
 ```
-### backend
+### Backend
 
 ```
 cd backend
