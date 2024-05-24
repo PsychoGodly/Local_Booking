@@ -33,24 +33,44 @@ const Calendar = () => {
   }, [selectedSalle]);
 
   // Function to fetch reservations data
-  const fetchData = async (salleId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/salles/${salleId}/reservations`
-      );
-      const reservations = response.data.map((reservation) => ({
-        id: reservation.id || uuidv4(),
-        title: reservation.comment,
-        start: new Date(reservation.startTime),
-        end: new Date(reservation.endTime),
-        color: reservation.color,
-        user: reservation.user,
-      }));
-      setEvents(reservations);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // Function to fetch reservations data
+const fetchData = async (salleId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8080/api/salles/${salleId}/reservations`
+    );
+    const reservations = response.data.map((reservation) => ({
+      id: reservation.id || uuidv4(),
+      title: reservation.comment,
+      start: new Date(reservation.startTime),
+      end: new Date(reservation.endTime),
+      color: reservation.color,
+      user: reservation.user,
+    }));
+
+    // Adjust event rendering for single day reservations
+    const updatedReservations = reservations.map((reservation) => {
+      // Check if reservation spans a single day
+      const isSingleDayReservation =
+        reservation.start.toDateString() === reservation.end.toDateString();
+
+      // Set rendering options for single day reservations
+      if (isSingleDayReservation) {
+        return {
+          ...reservation,
+          allDay: true, // Set as all-day event
+        };
+      }
+
+      return reservation;
+    });
+
+    setEvents(updatedReservations);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
 
   // Function to fetch holidays data
   const fetchHolidays = async () => {
