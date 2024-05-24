@@ -245,6 +245,8 @@ const handleEventClick = (clickInfo) => {
             eventClick={handleEventClick}
             eventContent={renderEventContent}
             eventDidMount={handleEventMount}
+            dayHeaderClassNames={"bg-gray-900 text-white"}
+
           />
         </div>
       )}
