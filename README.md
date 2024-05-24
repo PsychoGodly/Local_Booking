@@ -5,6 +5,18 @@
 
 
 
+[![Features](https://img.shields.io/badge/Features-cyan)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#features)
+[![Beta Version Changelogs](https://img.shields.io/badge/Beta%20Version%20Changelogs-blue)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#beta-version-changelogs)
+[![Stable Version Changelogs](https://img.shields.io/badge/Stable%20Version%20Changelogs-green)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#stable-version-changelogs)
+[![Tech](https://img.shields.io/badge/Tech-yellow)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#tech)
+[![Installation](https://img.shields.io/badge/Installation-orange)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#installation)
+[![Run](https://img.shields.io/badge/Run-red)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#run)
+[![License](https://img.shields.io/badge/License-lightgrey)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#license)
+
+
+
+
+
 ## Features
 
 - Authentification Page (Coming Soon)
@@ -34,22 +46,22 @@
 
 
 ## Chalngelogs:
-# Beta version Changelogs:
+### Beta version Changelogs:
 
-# v5.5 | Current Beta
+#### v5.5 | Current Beta
 - Enhacned Login Page UI
 - Enhanced Sidebar UI
 
-# v5.3
+#### v5.3
 - Date Type Bug fixed
 - Holidays Bugs fixed
 
-# v5.1
+#### v5.1
 - Added Holidays
 - Now you can't make a booking in Holidays
     
 
-# Stable Version Changelogs:
+### Stable Version Changelogs:
 
 # v4.0 | Current
 - New UI
@@ -58,43 +70,43 @@
 - Date Selection Bug fixed
 - Delete Reservation Bug fixed
 
-# v3.5
+#### v3.5
 - Room Selection Bug fixes
 - Cancel Button Bug fix
 
-# v3.2
+#### v3.2
 - Rooms Selection
 
-# v2.9
+#### v2.9
 - Delete Reservations
 - Cleaner Code
 
 
-# v2.7
+#### v2.7
 - Fixed Reservations Bugs
 
-# v2.5
+#### v2.5
 - Delete Reservations
 
-# v2.0
+#### v2.0
 - Add Reservations
 - Modify Reservations
 
-# v1.8
+#### v1.8
 - Database Intergration (MySQL)
 
-# v1.0 beta 
+#### v1.0 beta 
 - Added Calendar
 - 
 
 ## Tech
 
-# Backend
+### Backend
 - Spring Boot
     - Security
     - Data
 
-# Frontend
+### Frontend
 
 - ReactJS
 - Vite
@@ -110,7 +122,7 @@
 
 ## Installation
 
-## Prerequisites
+### Prerequisites
 Ensure you have the following software installed:
 - Node.js vX.X.X
 - Java JDK 17+
@@ -118,7 +130,7 @@ Ensure you have the following software installed:
 - PostgreSQL or MySQL database
 - XAMPP (local Database)
 
-Install the dependencies 
+### Install the dependencies 
 ```
 cd frontend
 ```
@@ -141,7 +153,7 @@ npm install tailwindcss postcss autoprefixer
 npx tailwindcss init
 ```
 
-Maven Configuration (pom.xml):
+### Maven Configuration (pom.xml):
 Add the following dependencies to your pom.xml file in the backend directory.
 
 
@@ -211,7 +223,7 @@ Add the following dependencies to your pom.xml file in the backend directory.
 
 
 
-# Run
+## Run
 
 ### Frontend
 
