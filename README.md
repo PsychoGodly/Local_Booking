@@ -1,5 +1,5 @@
 # Azura's Local Booking System
-## _A software to easly manage meeting rooms reservations_
+## _A system to easly manage meeting rooms reservations_
 
 <div align="center">
 
