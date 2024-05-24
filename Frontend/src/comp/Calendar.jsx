@@ -230,6 +230,7 @@ const handleEventClick = (clickInfo) => {
       ) : (
         <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
           <FullCalendar
+            locale={"en"}  // ar fr en
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
