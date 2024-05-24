@@ -70,7 +70,7 @@
 
 ### Stable Version Changelogs:
 
-# v4.0 | Current
+#### v4.0 | Current
 - New UI
 - Added Notfication Messages when booking or deleting a reservaton
 - Room Selction Bug fixed
