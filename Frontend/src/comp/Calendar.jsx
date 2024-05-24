@@ -12,7 +12,9 @@ import SalleSelector from "./SalleSelector";
 import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
 
 const Calendar = () => {
+  // State variables
   const [events, setEvents] = useState([]);
+  const [holidays, setHolidays] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const calendarRef = useRef(null);
@@ -20,58 +22,135 @@ const Calendar = () => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [selectedSalle, setSelectedSalle] = useState(null);
   const [isNewReservation, setIsNewReservation] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
+  // Fetch data when selectedSalle changes
   useEffect(() => {
     if (selectedSalle) {
       fetchData(selectedSalle);
     }
+    fetchHolidays(); // Fetch holidays data
   }, [selectedSalle]);
 
-  const fetchData = async (salleId) => {
+  // Function to fetch reservations data
+  // Function to fetch reservations data
+const fetchData = async (salleId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8080/api/salles/${salleId}/reservations`
+    );
+    const reservations = response.data.map((reservation) => ({
+      id: reservation.id || uuidv4(),
+      title: reservation.comment,
+      start: new Date(reservation.startTime),
+      end: new Date(reservation.endTime),
+      color: reservation.color,
+      user: reservation.user,
+    }));
+
+    // Adjust event rendering for single day reservations
+    const updatedReservations = reservations.map((reservation) => {
+      // Check if reservation spans a single day
+      const isSingleDayReservation =
+        reservation.start.toDateString() === reservation.end.toDateString();
+
+      // Set rendering options for single day reservations
+      if (isSingleDayReservation) {
+        return {
+          ...reservation,
+          allDay: true, // Set as all-day event
+        };
+      }
+
+      return reservation;
+    });
+
+    setEvents(updatedReservations);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+
+  // Function to fetch holidays data
+  const fetchHolidays = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/salles/${salleId}/reservations`
-      );
-      const reservations = response.data.map((reservation) => ({
-        id: reservation.id || uuidv4(),
-        title: reservation.comment,
-        start: new Date(reservation.startTime),
-        end: new Date(reservation.endTime),
-        color: reservation.color,
-        user: reservation.user,
+      const response = await axios.get(`http://localhost:8080/api/holidays`);
+      const holidaysData = response.data.map((holiday) => ({
+        id: holiday.id || uuidv4(),
+        title: holiday.name,
+        start: new Date(holiday.date),
+        end: new Date(holiday.date),
+        color: 'gray',
+        allDay: true,
+        isHoliday: true,
       }));
-      setEvents(reservations);
+      setHolidays(holidaysData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching holidays data:", error);
     }
   };
 
-  const handleDateSelect = (info) => {
-    const startDate = info.startStr;
-    const endDate = info.endStr.substring(0, 10) === startDate.substring(0, 10)
+  // Combine reservations and holidays for the calendar
+  const combinedEvents = [...events, ...holidays];
+
+  // Handle date selection on the calendar
+const handleDateSelect = (info) => {
+  const startDate = info.startStr;
+  const endDate =
+    info.endStr.substring(0, 10) === startDate.substring(0, 10)
       ? startDate
       : new Date(new Date(info.endStr).setDate(new Date(info.endStr).getDate() - 1)).toISOString().substring(0, 10);
+
+  // Check if any cell within the selected range corresponds to a holiday
+  const isHolidayInRange = combinedEvents.some(
+    (event) =>
+      event.isHoliday &&
+      (event.start >= info.start && event.start <= info.end) // Check if holiday is within the selected range
+  );
+
+  if (isHolidayInRange) {
+    // If any cell within the selected range corresponds to a holiday
+    setShowForm(false); // Do not show the form
+    // Display error message to the user
+    setErrorMessage("You cannot reserve a salle on a holiday.");
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 1000);
+  } else {
+    // If no cell within the selected range corresponds to a holiday
     setSelectedDates([{ startDate, endDate }]);
-    setShowForm(true);
+    setShowForm(true); // Show the form
     setIsNewReservation(true);
     console.log("Selected date range:", startDate, " - ", endDate);
-  };
+  }
+};
 
-  const handleEventClick = (clickInfo) => {
-    console.log("Event clicked:", clickInfo.event);
-    const reservationInfo = {
-      id: clickInfo.event.id,
-      title: clickInfo.event.title,
-      start: clickInfo.event.start,
-      end: clickInfo.event.end,
-      color: clickInfo.event.backgroundColor,
-    };
-    console.log("Reservation info:", reservationInfo);
-    setSelectedReservation(reservationInfo);
-    setIsNewReservation(false);
-    setShowForm(true); // Show the form when clicking on an existing reservation
-  };
 
+// Handle click on an existing event
+// Handle click on an existing event
+const handleEventClick = (clickInfo) => {
+  // Check if the clicked event is a holiday
+  if (clickInfo.event.extendedProps.isHoliday) {
+    return; // Do nothing if it's a holiday
+  }
+
+  console.log("Event clicked:", clickInfo.event);
+  const reservationInfo = {
+    id: clickInfo.event.id,
+    title: clickInfo.event.title,
+    start: clickInfo.event.start,
+    end: clickInfo.event.end,
+    color: clickInfo.event.backgroundColor,
+  };
+  console.log("Reservation info:", reservationInfo);
+  setSelectedReservation(reservationInfo);
+  setIsNewReservation(false);
+  setShowForm(true); // Show the form when clicking on an existing reservation
+};
+
+
+  // Handle saving a reservation
   const handleSaveReservation = async (newReservation) => {
     try {
       const response = await axios.post(
@@ -100,8 +179,10 @@ const Calendar = () => {
     }
   };
 
+  // Render content of an event on the calendar
   const renderEventContent = (eventInfo) => {
     const formatTime = (date) => {
+      if (!date) return ""; // Return empty string if date is null or undefined
       const hours = date.getHours().toString().padStart(2, "0");
       const minutes = date.getMinutes().toString().padStart(2, "0");
       return `${hours}:${minutes}`;
@@ -109,27 +190,35 @@ const Calendar = () => {
 
     const startTime = formatTime(eventInfo.event.start);
     const endTime = formatTime(eventInfo.event.end);
+
     return (
       <div>
         <b>{eventInfo.event.title}</b>
         <br />
-        <p>
-          [{startTime} - {endTime}]
-        </p>
+        {eventInfo.event.allDay ? (
+          <p>All Day</p>
+        ) : (
+          <p>
+            [{startTime} - {endTime}]
+          </p>
+        )}
       </div>
     );
   };
 
+  // Set cursor pointer for events
   const handleEventMount = (info) => {
     const eventEl = info.el;
     eventEl.style.cursor = "pointer";
   };
 
+  // Handle selection of a salle (room)
   const handleSalleSelect = (salleId) => {
     console.log("Selected room:", salleId);
     setSelectedSalle(salleId);
   };
 
+  // Handle cancellation of reservation form
   const handleCancel = () => {
     setShowForm(false);
   };
@@ -137,7 +226,7 @@ const Calendar = () => {
     setShowForm(false);
   };
 
-
+  // Handle deletion of a reservation
   const handleDeleteReservation = async (reservationId) => {
     try {
       await axios.delete(`http://localhost:8080/api/reservations/${reservationId}`);
@@ -148,7 +237,7 @@ const Calendar = () => {
       console.error("Error deleting reservation:", error);
     }
   };
-  
+
   return (
     <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       <div className="mb-6">
@@ -161,10 +250,11 @@ const Calendar = () => {
       ) : (
         <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
           <FullCalendar
+            locale={"en"}  // ar fr en
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            events={events}
+            events={combinedEvents}
             headerToolbar={{
               start: "prev,next today",
               center: "title",
@@ -176,13 +266,15 @@ const Calendar = () => {
             eventClick={handleEventClick}
             eventContent={renderEventContent}
             eventDidMount={handleEventMount}
+            dayHeaderClassNames={"bg-gray-900 text-white"}
+
           />
         </div>
       )}
       {showForm && isNewReservation && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
-            <ReservationForm
+            <ReservationForm              
               selectedDates={selectedDates}
               setEvents={setEvents}
               onCancel={handleCancel}
@@ -205,12 +297,19 @@ const Calendar = () => {
         </div>
       )}
 
-
-      {/*brrrrrrrrrrrron*/}
+      {/* Success message for reservation creation */}
       {successMessage && (
         <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded">
           Réservation créée avec succès!
         </div>
+      )}
+
+      {errorMessage && (
+        <>
+          <div className="absolute top-4 right-4 bg-red-800 text-white p-2 rounded">
+            {errorMessage}
+          </div>
+        </>
       )}
     </div>
   );

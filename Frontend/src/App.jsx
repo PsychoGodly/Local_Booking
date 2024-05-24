@@ -2,41 +2,34 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Calendar from "./comp/Calendar";
 import Login from "./comp/Login";
-
-// import Calendar from "./component/Calendar";
-// import Test from "./component/Test";
-
-// import ReservationCalendar from "./component/ReservationCalendar";
-// import MyCalendar from "./component/MyCalendar";
+import SidebarComponent from "./comp/SideBar";
 
 const App = () => {
   return (
-    <div>
+    <div className="app-container">
       <Router>
         <Switch>
-          {/* <Route path="/calendar">
-            <Calendar />
-          </Route> */}
-
-          {/* <Route path="/test">
-            <Test />
-          </Route>  */}
-
-          {/* <Route path="/test">
-            <ReservationCalendar />
-          </Route> */}
-
-<Route path="/">
+          <Route path="/auth">
             <Login />
           </Route>
-
           <Route path="/">
-            <Calendar />
+            <CalendarLayout />
           </Route>
-
-
         </Switch>
       </Router>
+    </div>
+  );
+};
+
+const CalendarLayout = () => {
+  return (
+    <div className="calendar-layout">
+      <div className="sidebar">
+        <SidebarComponent />
+      </div>
+      <div className="main-content">
+        <Calendar />
+      </div>
     </div>
   );
 };
