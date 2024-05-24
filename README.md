@@ -6,9 +6,10 @@
 
 
 [![Features](https://img.shields.io/badge/Features-cyan)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#features)
-[![Beta Version Changelogs](https://img.shields.io/badge/Beta%20Version%20Changelogs-blue)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#beta-version-changelogs)
-[![Stable Version Changelogs](https://img.shields.io/badge/Stable%20Version%20Changelogs-green)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#stable-version-changelogs)
+[![Beta Version Changelogs](https://img.shields.io/badge/Beta%20Version%20Changelogs-orange)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#beta-version-changelogs)
+[![Stable Version Changelogs](https://img.shields.io/badge/Stable%20Version%20Changelogs-lightgreen)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#stable-version-changelogs)
 [![Tech](https://img.shields.io/badge/Tech-yellow)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#tech)
+[![Download](https://img.shields.io/badge/Download-green)](https://github.com/PsychoGodly/Local_Booking/releases)
 [![Installation](https://img.shields.io/badge/Installation-orange)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#installation)
 [![Run](https://img.shields.io/badge/Run-red)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#run)
 [![License](https://img.shields.io/badge/License-lightgrey)](https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#license)
