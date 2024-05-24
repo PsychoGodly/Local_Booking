@@ -1,6 +1,11 @@
 # Azura's Local Booking System
 ## _A software to easly manage meeting rooms reservations_
 
+<div align="center">
+
+
+
+
 ![azura](https://github.com/PsychoGodly/Local_Booking/assets/90983397/c00ab123-5072-4e81-807d-84939935443a)
 
 
@@ -16,6 +21,7 @@
 
 
 
+<div align="left">
 
 
 ## Features
