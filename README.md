@@ -181,6 +181,9 @@ npm install tailwindcss postcss autoprefixer
 ```
 npx tailwindcss init
 ```
+```
+npm install antd --save
+```
 
 ### Maven Configuration (pom.xml):
 Add the following dependencies to your pom.xml file in the backend directory.
