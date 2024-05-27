@@ -74,7 +74,18 @@
 ## Chalngelogs:
 ### Beta version Changelogs:
 
-#### v5.5 | Current Beta
+#### v6.9 | Current Beta
+- Enhacned UI
+- Added a sidebar
+- Added a header
+- Calendar UI chagned
+- Single day error fixed
+- Changed favicon and web app name
+- Change port of backend in front from Config.js instead of changing it across the whole code
+- Added Dashboard page with counts
+- Updated code for support
+
+#### v5.5
 - Enhacned Login Page UI
 - Enhanced Sidebar UI
 
