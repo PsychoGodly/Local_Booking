@@ -4,7 +4,7 @@ import Calendar from "./comp/Calendar";
 import Login from "./comp/Login";
 import SidebarComponent from "./comp/SideBar";
 import Dashboard from "./comp/Dashboard";
-
+import Header from "./comp/Header";
 const App = () => {
   return (
     <div className="app-container">
@@ -27,13 +27,18 @@ const App = () => {
 
 const CalendarLayout = () => {
   return (
-    <div className="calendar-layout flex justify-between  ">
-      <div className="sidebar">
+    <div className="calendar-layout  ">
+      <div>    <Header />
+</div>
+<div className="flex justify-between ">
+<div className="sidebar">
         <SidebarComponent />
       </div>
       <div className="main-content w-full">
         <Calendar />
       </div>
+</div>
+      
     </div>
   );
 };

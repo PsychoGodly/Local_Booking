@@ -10,6 +10,7 @@ import ReservationForm from "./ReservationForm";
 import EditForm from "./EditForm";
 import SalleSelector from "./SalleSelector";
 import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
+import Header from "./Header";
 
 const Calendar = () => {
   // State variables
@@ -239,7 +240,8 @@ const handleEventClick = (clickInfo) => {
   };
 
   return (
-    <div className="relative p-4 max-w-7xl mx-auto bg-gray-50 min-h-screen">
+
+    <div className="relative p-4 max-w-7xl mx-auto bg-white min-h-screen">
       <div className="mb-6">
         <SalleSelector onSelect={handleSalleSelect} />
       </div>
