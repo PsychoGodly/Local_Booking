@@ -23,11 +23,11 @@ const App = () => {
 
 const CalendarLayout = () => {
   return (
-    <div className="calendar-layout">
+    <div className="calendar-layout flex justify-between  ">
       <div className="sidebar">
         <SidebarComponent />
       </div>
-      <div className="main-content">
+      <div className="main-content w-full">
         <Calendar />
       </div>
     </div>
