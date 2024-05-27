@@ -106,7 +106,7 @@ const SideBar = () => {
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
-        className="h-[100vh]"
+        className="h-[calc(100vh+150px)]"
         selectedKeys={[selectedKey]}
         onClick={handleClick}
         items={items.map(item => ({
