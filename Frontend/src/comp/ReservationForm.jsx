@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from '../Config'
 
 const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
   // State variables for form inputs and UI state
@@ -27,7 +28,7 @@ const ReservationForm = ({ selectedDates, setEvents, onCancel, salleId }) => {
     try {
       // Send reservation data to the server
       const response = await axios.post(
-        `http://localhost:8080/api/reservations?salleId=${salleId}`,
+        `http://localhost:${config.portBackend}/api/reservations?salleId=${salleId}`,
         {
           startTime: startDate,
           endTime: endDate,

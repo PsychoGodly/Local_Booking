@@ -5,7 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-
+import config from '../Config'
 import ReservationForm from "./ReservationForm";
 import EditForm from "./EditForm";
 import SalleSelector from "./SalleSelector";
@@ -37,7 +37,7 @@ const Calendar = () => {
 const fetchData = async (salleId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/api/salles/${salleId}/reservations`
+      `http://localhost:${config.portBackend}/api/salles/${salleId}/reservations`
     );
     const reservations = response.data.map((reservation) => ({
       id: reservation.id || uuidv4(),
@@ -75,7 +75,7 @@ const fetchData = async (salleId) => {
   // Function to fetch holidays data
   const fetchHolidays = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/holidays`);
+      const response = await axios.get(`http://localhost:${config.portBackend}/api/holidays`);
       const holidaysData = response.data.map((holiday) => ({
         id: holiday.id || uuidv4(),
         title: holiday.name,
@@ -154,7 +154,7 @@ const handleEventClick = (clickInfo) => {
   const handleSaveReservation = async (newReservation) => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/reservations?salleId=${selectedSalle}`,
+        `http://localhost:${config.portBackend}/api/reservations?salleId=${selectedSalle}`,
         newReservation
       );
       const savedReservation = response.data;
@@ -229,7 +229,7 @@ const handleEventClick = (clickInfo) => {
   // Handle deletion of a reservation
   const handleDeleteReservation = async (reservationId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/reservations/${reservationId}`);
+      await axios.delete(`http://localhost:${config.portBackend}/api/reservations/${reservationId}`);
       // Fetch updated data after deletion
       fetchData(selectedSalle);
       setShowForm(false)

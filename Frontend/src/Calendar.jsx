@@ -28,7 +28,7 @@ function Calendar() {
     try {
       const response = await axios({
         method: 'post',
-        url: 'http://localhost:8080/api/events',
+        url: `http://localhost:${config.portBackend}/api/events`,
         data: eventData
       });
       console.log("Event created:", response.data);
