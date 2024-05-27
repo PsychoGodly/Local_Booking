@@ -7,7 +7,7 @@ const SidebarComponent = () => {
   return (
     <div style={{ display: "flex", alignItems: "flex-end" }}>
       {/* Sidebar Menu */}
-      <div style={{ flex: "0 0 auto", paddingTop: "20px" }}>
+      <div style={{ flex: "0 0 auto", paddingTop: "20px"}}>
         <Sidebar aria-label="Sidebar with multi-level dropdown example" style={{ textAlign: "left" }}>
           <Sidebar.Items>
             <Sidebar.ItemGroup>
@@ -29,10 +29,7 @@ const SidebarComponent = () => {
         </Sidebar>
       </div>
 
-      {/* Calendar */}
-      <div style={{ flex: "1 1 auto" }}>
-        {/* Render your Calendar component here */}
-      </div>
+      
     </div>
   );
 };
