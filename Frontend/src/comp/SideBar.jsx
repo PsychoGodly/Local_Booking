@@ -76,7 +76,7 @@ const SideBar = () => {
           key: "5",
           icon: <FontAwesomeIcon icon={faUser} />,
           label: "Users",
-          link: "/admin/users",
+          link: "/UsersTable",
         },
         {
           key: "6",

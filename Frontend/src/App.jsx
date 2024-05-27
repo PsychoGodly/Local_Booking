@@ -5,6 +5,7 @@ import Login from "./comp/Login";
 import SidebarComponent from "./comp/SideBar";
 import Dashboard from "./comp/Dashboard";
 import Header from "./comp/Header";
+import UsersTable from "./comp/UsersTable";
 const App = () => {
   return (
     <div className="app-container">
@@ -16,9 +17,18 @@ const App = () => {
           <Route path="/Dashboard">
             <Dashboard />
           </Route>
+          <Route path="/UsersTable">
+            <UsersTable />
+          </Route>
+
+
+
+
+
           <Route path="/">
             <CalendarLayout />
           </Route>
+          
         </Switch>
       </Router>
     </div>
