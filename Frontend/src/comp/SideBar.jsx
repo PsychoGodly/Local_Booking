@@ -47,6 +47,11 @@ const items = [
         key: "6",
         icon:  <FontAwesomeIcon icon={faHouse} />,
         label: "Rooms",
+      },
+      {
+        key: "7",
+        icon:  <FontAwesomeIcon icon={faCalendar} />,
+        label: "Events",
       }
     ],
   },
