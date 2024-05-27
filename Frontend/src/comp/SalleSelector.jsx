@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from '../Config'
 
 // Component for selecting a room
 const SalleSelector = ({ onSelect }) => {
@@ -12,7 +13,7 @@ const SalleSelector = ({ onSelect }) => {
     const fetchSalles = async () => {
       try {
         // Fetch rooms data from the API
-        const response = await axios.get("http://localhost:8080/api/salles");
+        const response = await axios.get(`http://localhost:${config.portBackend}/api/salles`);
         // Set the fetched rooms data to state
         setSalles(response.data);
       } catch (error) {

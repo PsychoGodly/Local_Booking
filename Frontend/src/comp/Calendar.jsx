@@ -5,7 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-
+import config from '../Config'
 import ReservationForm from "./ReservationForm";
 import EditForm from "./EditForm";
 import SalleSelector from "./SalleSelector";
@@ -33,29 +33,49 @@ const Calendar = () => {
   }, [selectedSalle]);
 
   // Function to fetch reservations data
-  const fetchData = async (salleId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/salles/${salleId}/reservations`
-      );
-      const reservations = response.data.map((reservation) => ({
-        id: reservation.id || uuidv4(),
-        title: reservation.comment,
-        start: new Date(reservation.startTime),
-        end: new Date(reservation.endTime),
-        color: reservation.color,
-        user: reservation.user,
-      }));
-      setEvents(reservations);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // Function to fetch reservations data
+const fetchData = async (salleId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:${config.portBackend}/api/salles/${salleId}/reservations`
+    );
+    const reservations = response.data.map((reservation) => ({
+      id: reservation.id || uuidv4(),
+      title: reservation.comment,
+      start: new Date(reservation.startTime),
+      end: new Date(reservation.endTime),
+      color: reservation.color,
+      user: reservation.user,
+    }));
+
+    // Adjust event rendering for single day reservations
+    const updatedReservations = reservations.map((reservation) => {
+      // Check if reservation spans a single day
+      const isSingleDayReservation =
+        reservation.start.toDateString() === reservation.end.toDateString();
+
+      // Set rendering options for single day reservations
+      if (isSingleDayReservation) {
+        return {
+          ...reservation,
+          allDay: true, // Set as all-day event
+        };
+      }
+
+      return reservation;
+    });
+
+    setEvents(updatedReservations);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
 
   // Function to fetch holidays data
   const fetchHolidays = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/holidays`);
+      const response = await axios.get(`http://localhost:${config.portBackend}/api/holidays`);
       const holidaysData = response.data.map((holiday) => ({
         id: holiday.id || uuidv4(),
         title: holiday.name,
@@ -134,7 +154,7 @@ const handleEventClick = (clickInfo) => {
   const handleSaveReservation = async (newReservation) => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/reservations?salleId=${selectedSalle}`,
+        `http://localhost:${config.portBackend}/api/reservations?salleId=${selectedSalle}`,
         newReservation
       );
       const savedReservation = response.data;
@@ -209,7 +229,7 @@ const handleEventClick = (clickInfo) => {
   // Handle deletion of a reservation
   const handleDeleteReservation = async (reservationId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/reservations/${reservationId}`);
+      await axios.delete(`http://localhost:${config.portBackend}/api/reservations/${reservationId}`);
       // Fetch updated data after deletion
       fetchData(selectedSalle);
       setShowForm(false)
@@ -230,6 +250,7 @@ const handleEventClick = (clickInfo) => {
       ) : (
         <div className="relative bg-white rounded-lg shadow-md p-4 mb-6">
           <FullCalendar
+            locale={"en"}  // ar fr en
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
@@ -245,6 +266,8 @@ const handleEventClick = (clickInfo) => {
             eventClick={handleEventClick}
             eventContent={renderEventContent}
             eventDidMount={handleEventMount}
+            dayHeaderClassNames={"bg-gray-900 text-white"}
+
           />
         </div>
       )}

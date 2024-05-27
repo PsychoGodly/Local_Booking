@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ConfirmDelete from "./ConfirmDelete";
+
+import config from '../Config'
+
 const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
   // State variables
   const [editedReservation, setEditedReservation] = useState({
@@ -26,7 +29,7 @@ const EditForm = ({ reservation, onSave, onCancel, onDelete }) => {
     try {
       // Send PUT request to update reservation
       const response = await axios.put(
-        `http://localhost:8080/api/reservations/${reservation.id}`,
+        `http://localhost:${config.portBackend}/api/reservations/${reservation.id}`,
         {
           startTime: new Date(editedReservation.startDate),
           endTime: new Date(editedReservation.endDate),
