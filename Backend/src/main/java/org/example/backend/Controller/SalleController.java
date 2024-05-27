@@ -40,7 +40,10 @@ public class SalleController {
         }
     }
 
-
+    @GetMapping("/Num_salle")
+    public Long get_Users() {
+        return salleRepository.count();
+    }
 
 
 }

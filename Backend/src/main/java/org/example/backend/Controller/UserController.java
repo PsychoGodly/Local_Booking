@@ -17,9 +17,9 @@ public class UserController {
     private UserRepository userRepository;
 
     // List des Users
-    @GetMapping("/users")
-    public List<User> get_Users() {
-        return userRepository.findAll();
+    @GetMapping("/Num_user")
+    public Long get_Users() {
+        return userRepository.count();
     }
 
 

@@ -115,5 +115,9 @@ public class ReservationController {
         }
     }
 
+    @GetMapping("/Num_reservation")
+    public Long get_Users() {
+        return reservationRepository.count();
+    }
 
 }

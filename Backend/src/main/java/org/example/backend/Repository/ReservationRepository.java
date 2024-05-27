@@ -14,4 +14,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findBySalle(Salle salle);
 
     List<Reservation> findBySalleId(Long id);
+
+    long count();
 }

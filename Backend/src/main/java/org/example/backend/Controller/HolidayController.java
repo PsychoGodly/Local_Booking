@@ -17,10 +17,12 @@ import java.util.List;
 public class HolidayController {
     private final ApiService apiService;
     private final HolidayService holidayService;
-    private HolidayRepository holidayRepository;
-    public HolidayController(ApiService apiService, HolidayService holidayService) {
+    private final HolidayRepository holidayRepository;
+
+    public HolidayController(ApiService apiService, HolidayService holidayService, HolidayRepository holidayRepository) {
         this.apiService = apiService;
         this.holidayService = holidayService;
+        this.holidayRepository = holidayRepository;
     }
 
     @GetMapping("/fetch-and-save")
@@ -38,5 +40,10 @@ public class HolidayController {
     @GetMapping("/holidays")
     public List<Holiday> getAllHolidays() {
         return holidayService.findAll();
+    }
+
+    @GetMapping("/Num_event")
+    public Long get_Users() {
+        return holidayRepository.count();
     }
 }
