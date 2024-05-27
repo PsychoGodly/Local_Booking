@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Calendar from "./comp/Calendar";
 import Login from "./comp/Login";
 import SidebarComponent from "./comp/SideBar";
+import Dashboard from "./comp/Dashboard";
 
 const App = () => {
   return (
@@ -11,6 +12,9 @@ const App = () => {
         <Switch>
           <Route path="/auth">
             <Login />
+          </Route>
+          <Route path="/Dashboard">
+            <Dashboard />
           </Route>
           <Route path="/">
             <CalendarLayout />

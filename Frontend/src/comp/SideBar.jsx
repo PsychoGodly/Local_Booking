@@ -9,7 +9,7 @@ import {
   PieChartOutlined,
   LogoutOutlined,
   UserAddOutlined,
-  
+
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 import { icon } from "@fortawesome/fontawesome-svg-core";
@@ -54,7 +54,7 @@ const items = [
     icon: <LogoutOutlined />,
     label: "Logout",
   }
-  
+
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -67,7 +67,7 @@ const SideBar = () => {
         width: 256,
       }}
     >
-      
+
       <Menu
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
