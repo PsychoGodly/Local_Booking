@@ -9,52 +9,58 @@ import {
   PieChartOutlined,
   LogoutOutlined,
   UserAddOutlined,
-
+  PieChartFilled,
+  CalendarFilled,
+  CalendarOutlined
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 import { icon } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar, faCalendarDays, faCircleUser, faHouse, faRightFromBracket, faScrewdriverWrench, faUser } from "@fortawesome/free-solid-svg-icons";
 const items = [
   {
     key: "1",
-    icon: <PieChartOutlined />,
+    icon: <PieChartFilled/>,
     label: "Dashboard",
   },
   {
     key: "2",
-    icon: <DesktopOutlined />,
+    icon: <FontAwesomeIcon icon={faCalendarDays} />,
     label: "Reservations",
   },
   {
     key: "3",
-    icon: <ContainerOutlined />,
+    icon: <FontAwesomeIcon icon={faCircleUser} />,
     label: "Profile",
   },
   {
     key: "sub1",
     label: "Admin Section",
-    icon: <MailOutlined />,
+    icon: <FontAwesomeIcon icon={faScrewdriverWrench} />,
     children: [
       {
         key: "5",
-        icon:<UserAddOutlined />,
+        icon:  <FontAwesomeIcon icon={faUser} />,
         label: "Users",
       },
       {
         key: "6",
+        icon:  <FontAwesomeIcon icon={faHouse} />,
         label: "Rooms",
       },
       {
         key: "7",
+        icon:  <FontAwesomeIcon icon={faCalendar} />,
         label: "Events",
       }
     ],
   },
   {
     key: "8",
-    icon: <LogoutOutlined />,
+    icon:  <FontAwesomeIcon icon={faRightFromBracket} />,
     label: "Logout",
   }
-
+  
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -67,7 +73,7 @@ const SideBar = () => {
         width: 256,
       }}
     >
-
+      
       <Menu
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
