@@ -1,5 +1,6 @@
 package org.example.backend.Controller;
 
+import jakarta.transaction.Transactional;
 import org.example.backend.Repository.ReservationRepository;
 import org.example.backend.Repository.SalleRepository;
 import org.example.backend.model.Reservation;
@@ -7,12 +8,11 @@ import org.example.backend.model.Salle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -40,10 +40,16 @@ public class SalleController {
         }
     }
 
+    //Num of rooms
     @GetMapping("/Num_salle")
     public Long get_Users() {
         return salleRepository.count();
     }
 
+    //Add rooms
 
+    @PostMapping("/addSalle")
+    public Salle addSalle(@Valid @RequestBody Salle salle) {
+        return salleRepository.save(salle);
+    }
 }
