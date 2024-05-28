@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -46,11 +47,21 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
-        userRepository.save(user);
-        return ResponseEntity.ok("User added successfully");
+    public ResponseEntity<User> addUser( @RequestBody User user) {
+        try {
+            User newUser = userRepository.save(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-
-
 }
+
+
+
+
+
+
+
+
 
