@@ -21,11 +21,9 @@ public class UserService {
 
     public ResponseEntity<User> addUser(@Valid User user) {
         try {
-            // Assurez-vous que l'utilisateur n'existe pas déjà
             if (userRepository.findByUsername(user.getUsername()).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
-            // Sauvegardez le nouvel utilisateur dans la base de données
             User newUser = userRepository.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
         } catch (Exception e) {
