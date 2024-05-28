@@ -50,6 +50,7 @@ public class SalleController {
 
     @PostMapping("/addSalle")
     public Salle addSalle(@Valid @RequestBody Salle salle) {
+
         return salleRepository.save(salle);
     }
 }

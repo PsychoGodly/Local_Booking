@@ -25,4 +25,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Reservation> reservations;
+
+    public User(String username, String email, String password, String firstName, String lastName) {
+    }
 }
