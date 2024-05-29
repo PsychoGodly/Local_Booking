@@ -26,6 +26,5 @@ public class User {
     @JsonManagedReference
     private List<Reservation> reservations;
 
-    public User(String username, String email, String password, String firstName, String lastName) {
-    }
+    
 }
