@@ -5,6 +5,7 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faUserEdit, faUserXmark } from "@fortawesome/free-solid-svg-icons";
+import AddSalleForm from "./AddSalleForm";
 
 const SallesList = () => {
   const [salles, setSalles] = useState([]);
@@ -75,6 +76,9 @@ const SallesList = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="ml-[100px] mt-5">
+        <AddSalleForm />
         </div>
       </div>
     </div>

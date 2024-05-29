@@ -82,7 +82,7 @@ const SideBar = () => {
           key: "6",
           icon: <FontAwesomeIcon icon={faHouse} />,
           label: "Rooms",
-          link: "/admin/rooms",
+          link: "/RoomsTable",
         },
         {
           key: "7",
