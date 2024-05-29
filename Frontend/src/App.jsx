@@ -6,6 +6,7 @@ import SidebarComponent from "./comp/SideBar";
 import Dashboard from "./comp/Dashboard";
 import Header from "./comp/Header";
 import UsersTable from "./comp/UsersTable";
+import SallesList from "./comp/SallesList";
 const App = () => {
   return (
     <div className="app-container">
@@ -20,7 +21,9 @@ const App = () => {
           <Route path="/UsersTable">
             <UsersTable />
           </Route>
-
+          <Route path="/RoomsTable">
+            <SallesList />
+          </Route>
 
 
 

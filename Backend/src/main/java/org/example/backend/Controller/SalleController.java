@@ -52,4 +52,15 @@ public class SalleController {
     public Salle addSalle(@Valid @RequestBody Salle salle) {
         return salleRepository.save(salle);
     }
+
+
+    @DeleteMapping("/delete_salle/{id}")
+    public ResponseEntity<?> deleteSalle(@PathVariable Long id) {
+        try {
+            salleRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
