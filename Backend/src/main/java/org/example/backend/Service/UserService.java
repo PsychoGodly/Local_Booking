@@ -19,7 +19,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<User> addUser(@Valid User user) {
+    public ResponseEntity<User> addUser(User user) {
         try {
             if (userRepository.findByUsername(user.getUsername()).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
