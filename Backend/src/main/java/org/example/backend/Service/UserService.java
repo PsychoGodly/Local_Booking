@@ -7,12 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -21,12 +23,10 @@ public class UserService {
 
     public ResponseEntity<User> addUser(User user) {
         try {
-            if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build();
-            }
             User newUser = userRepository.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
         } catch (Exception e) {
+            logger.error("Error occurred while adding user: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

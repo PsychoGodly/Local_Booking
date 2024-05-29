@@ -5,6 +5,7 @@ import org.example.backend.Service.UserService;
 import org.example.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/api")
 public class UserController {
 
@@ -51,8 +52,9 @@ public class UserController {
         }
     }
 
-    @PostMapping("/addUser")
-    public ResponseEntity<User> addUser(@RequestBody User user) {
+    @PostMapping(value = "/addUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> addUser(@RequestBody @Valid User user) {
         return userService.addUser(user);
     }
+
 }
