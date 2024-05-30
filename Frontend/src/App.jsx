@@ -9,6 +9,8 @@ import UsersTable from "./comp/UsersTable";
 import SallesList from "./comp/SallesList";
 import AddHolidayForm from "./comp/AddHolidayForm";
 import UserProfile from "./comp/UserProfile";
+import ApexChart from "./comp/ReservationStatistics";
+import ReservationStatistics from "./comp/ReservationStatistics";
 const App = () => {
   return (
     <div className="app-container">
@@ -31,6 +33,9 @@ const App = () => {
           </Route>
           <Route path="/profile">
             <UserProfile />
+          </Route>
+          <Route path="/static">
+            <ReservationStatistics />
           </Route>
 
           <Route path="/">
