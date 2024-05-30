@@ -56,7 +56,7 @@ const Login = () => {
       className={`border py-2 px-3 rounded text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.username ? "border-red-500" : "border-gray-300"}`}
       name="username"
       type="text"
-      placeholder="e.g. houssam.elouafi@azura.ma"
+      placeholder="nom.prenom@azura.ma"
       value={credentials.username}
       onChange={handleInputChange}
     />
