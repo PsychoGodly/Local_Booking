@@ -29,12 +29,9 @@ const App = () => {
             <AddHolidayForm />
           </Route>
 
-
-
           <Route path="/">
             <CalendarLayout />
           </Route>
-          
         </Switch>
       </Router>
     </div>
@@ -44,17 +41,18 @@ const App = () => {
 const CalendarLayout = () => {
   return (
     <div className="calendar-layout  ">
-      <div>    <Header />
-</div>
-<div className="flex justify-between ">
-<div className="sidebar">
-        <SidebarComponent />
+      <div>
+        {" "}
+        <Header />
       </div>
-      <div className="main-content w-full">
-        <Calendar />
+      <div className="flex justify-between ">
+        <div className="sidebar">
+          <SidebarComponent />
+        </div>
+        <div className="main-content w-full">
+          <Calendar />
+        </div>
       </div>
-</div>
-      
     </div>
   );
 };

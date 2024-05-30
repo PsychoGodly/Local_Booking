@@ -88,7 +88,7 @@ const SideBar = () => {
           key: "7",
           icon: <FontAwesomeIcon icon={faCalendarAlt} />,
           label: "Events",
-          link: "/admin/events",
+          link: "/addEvent",
         },
       ],
     },
