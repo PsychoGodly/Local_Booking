@@ -18,7 +18,6 @@ const Header = () => {
         <button onClick={toggleMenu} className="focus:outline-none">
           <img src={UserProfile} alt="Profile" className="h-8 w-8" />
         </button>
-        
         {isMenuOpen && (
           <div className="absolute z-50 right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
             <ul>

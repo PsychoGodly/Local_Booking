@@ -2,8 +2,6 @@ package org.example.backend.Controller;
 
 import org.example.backend.Repository.UserRepository;
 import org.example.backend.Service.UserService;
-
-import org.example.backend.model.Holiday;
 import org.example.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -59,32 +56,5 @@ public class UserController {
     public ResponseEntity<User> addUser(@RequestBody @Valid User user) {
         return userService.addUser(user);
     }
-
-
-    @PostMapping("/addUser")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
-        try {
-            User savedUser = userRepository.save(user);
-            return new ResponseEntity<>("Holiday added with ID: " + savedUser.getId(), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to add holiday", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/admin/profile")
-    public ResponseEntity<User> getAdminProfile() {
-        Optional<User> admin = userService.getAdminProfile();
-        if (admin.isPresent()) {
-            return ResponseEntity.ok(admin.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-}
 
 }
