@@ -48,7 +48,6 @@ const ReservationStatistics = () => {
 
   return (
     <div>
-      <h2>Reservation Statistics</h2>
       <div>
         <ReactApexChart options={chartOptions} series={chartData.series || []} type="bar" height={350} />
       </div>
