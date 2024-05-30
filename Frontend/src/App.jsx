@@ -7,6 +7,7 @@ import Dashboard from "./comp/Dashboard";
 import Header from "./comp/Header";
 import UsersTable from "./comp/UsersTable";
 import SallesList from "./comp/SallesList";
+import AddHolidayForm from "./comp/AddHolidayForm";
 const App = () => {
   return (
     <div className="app-container">
@@ -24,7 +25,9 @@ const App = () => {
           <Route path="/RoomsTable">
             <SallesList />
           </Route>
-
+          <Route path="/addEvent">
+            <AddHolidayForm />
+          </Route>
 
 
 
