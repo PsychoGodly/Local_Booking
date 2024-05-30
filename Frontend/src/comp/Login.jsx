@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash,faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
+import placeholderImage from "../assets/azura.png"; 
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+  const [showPassword, setShowPassword] = useState(false); 
 
   const handleLoginForm = (evt) => {
     evt.preventDefault();
