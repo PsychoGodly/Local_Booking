@@ -26,6 +26,8 @@ function UsersTable() {
     axios
       .delete(`http://localhost:${config.portBackend}/api/user/${id}`)
       .then(() => {
+
+        
         // Update state to remove the deleted user from the list
         setUsers(users.filter((user) => user.id !== id));
       })
