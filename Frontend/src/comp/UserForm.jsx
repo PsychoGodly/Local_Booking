@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const UserForm = () => {
   const [formData, setFormData] = useState({
@@ -18,13 +20,6 @@ const UserForm = () => {
     });
   };
 
-  const handleRoleToggle = () => {
-    setFormData({
-      ...formData,
-      role: formData.role === 'User' ? 'Admin' : 'User',
-    });
-  };
-
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -36,107 +31,85 @@ const UserForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={styles.form}>
-      <div style={styles.formGroup}>
-        <label htmlFor="name">Name:</label>
+    <form onSubmit={handleSubmit} className="w-full max-w-md p-8 mx-auto bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Add New User</h2>
+      <div className="mb-4">
+        <label htmlFor="name" className="block text-gray-700">Name</label>
         <input
           type="text"
           id="name"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          style={styles.input}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
         />
       </div>
-      <div style={styles.formGroup}>
-        <label htmlFor="email">Email:</label>
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-gray-700">Email</label>
         <input
           type="email"
           id="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          style={styles.input}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
         />
       </div>
-      <div style={styles.formGroup}>
-        <label htmlFor="password">Password:</label>
-        <div style={styles.passwordWrapper}>
+      <div className="mb-4">
+        <label htmlFor="password" className="block text-gray-700">Password</label>
+        <div className="flex items-center">
           <input
             type={showPassword ? 'text' : 'password'}
             id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
-            style={styles.input}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400"
           />
           <button
             type="button"
             onClick={handlePasswordToggle}
-            style={styles.showHideButton}
+            className="ml-2 px-4 py-2 bg-gray-200 border border-gray-300 rounded-md hover:bg-gray-300 focus:outline-none focus:border-blue-400"
           >
-            {showPassword ? 'Hide' : 'Show'}
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="text-gray-600" />
           </button>
         </div>
       </div>
-      <div style={styles.formGroup}>
-        <label htmlFor="role">Role:</label>
-        <div style={styles.switchWrapper}>
-          <span>{formData.role}</span>
-          <button
-            type="button"
-            onClick={handleRoleToggle}
-            style={styles.switchButton}
-          >
-            Toggle Role
-          </button>
+      <div className="mb-4">
+        <label className="block mb-2 text-gray-700">Role</label>
+        <div className="flex items-center">
+          <label htmlFor="user" className="flex items-center mr-4">
+            <input
+              type="radio"
+              id="user"
+              name="role"
+              value="User"
+              checked={formData.role === 'User'}
+              onChange={handleChange}
+              className="mr-2 text-blue-500"
+            />
+            User
+          </label>
+          <label htmlFor="admin" className="flex items-center">
+            <input
+              type="radio"
+              id="admin"
+              name="role"
+              value="Admin"
+              checked={formData.role === 'Admin'}
+              onChange={handleChange}
+              className="mr-2 text-blue-500"
+            />
+            Admin
+          </label>
         </div>
       </div>
-      <button type="submit" style={styles.addButton}>Add User</button>
+      <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600 flex items-center">
+        Add User
+        <FontAwesomeIcon icon={faUserPlus} className="ml-2" />
+      </button>
     </form>
   );
-};
-
-const styles = {
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '300px',
-    margin: '0 auto',
-  },
-  formGroup: {
-    marginBottom: '15px',
-    width: '100%',
-  },
-  input: {
-    width: '100%',
-    padding: '8px',
-    boxSizing: 'border-box',
-  },
-  passwordWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  showHideButton: {
-    marginLeft: '10px',
-    padding: '8px',
-  },
-  switchWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  switchButton: {
-    marginLeft: '10px',
-    padding: '8px',
-  },
-  addButton: {
-    backgroundColor: 'green',
-    color: 'white',
-    padding: '10px 20px',
-    border: 'none',
-    cursor: 'pointer',
-  },
 };
 
 export default UserForm;

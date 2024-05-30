@@ -6,6 +6,11 @@ import SidebarComponent from "./comp/SideBar";
 import Dashboard from "./comp/Dashboard";
 import Header from "./comp/Header";
 import UsersTable from "./comp/UsersTable";
+import SallesList from "./comp/SallesList";
+import AddHolidayForm from "./comp/AddHolidayForm";
+import UserProfile from "./comp/UserProfile";
+import ApexChart from "./comp/ReservationStatistics";
+import ReservationStatistics from "./comp/ReservationStatistics";
 const App = () => {
   return (
     <div className="app-container">
@@ -20,15 +25,22 @@ const App = () => {
           <Route path="/UsersTable">
             <UsersTable />
           </Route>
-
-
-
-
+          <Route path="/RoomsTable">
+            <SallesList />
+          </Route>
+          <Route path="/addEvent">
+            <AddHolidayForm />
+          </Route>
+          <Route path="/profile">
+            <UserProfile />
+          </Route>
+          <Route path="/static">
+            <ReservationStatistics />
+          </Route>
 
           <Route path="/">
             <CalendarLayout />
           </Route>
-          
         </Switch>
       </Router>
     </div>
@@ -38,17 +50,18 @@ const App = () => {
 const CalendarLayout = () => {
   return (
     <div className="calendar-layout  ">
-      <div>    <Header />
-</div>
-<div className="flex justify-between ">
-<div className="sidebar">
-        <SidebarComponent />
+      <div>
+        {" "}
+        <Header />
       </div>
-      <div className="main-content w-full">
-        <Calendar />
+      <div className="flex justify-between ">
+        <div className="sidebar">
+          <SidebarComponent />
+        </div>
+        <div className="main-content w-full">
+          <Calendar />
+        </div>
       </div>
-</div>
-      
     </div>
   );
 };

@@ -29,5 +29,17 @@ public class UserService {
             logger.error("Error occurred while adding user: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+
+    public Optional<User> getAdminProfile() {
+        return userRepository.findByRole("admin");
     }
 }

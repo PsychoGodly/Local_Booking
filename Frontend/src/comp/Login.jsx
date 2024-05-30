@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash,faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import placeholderImage from "../assets/azura.png"; // Make sure to have a placeholder image in the same directory
+import placeholderImage from "../assets/azura.png"; 
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+  const [showPassword, setShowPassword] = useState(false); 
 
   const handleLoginForm = (evt) => {
     evt.preventDefault();
@@ -56,7 +56,7 @@ const Login = () => {
       className={`border py-2 px-3 rounded text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.username ? "border-red-500" : "border-gray-300"}`}
       name="username"
       type="text"
-      placeholder="e.g. houssam.elouafi@azura.ma"
+      placeholder="nom.prenom@azura.ma"
       value={credentials.username}
       onChange={handleInputChange}
     />

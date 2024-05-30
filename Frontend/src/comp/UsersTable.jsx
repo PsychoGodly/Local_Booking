@@ -26,6 +26,8 @@ function UsersTable() {
     axios
       .delete(`http://localhost:${config.portBackend}/api/user/${id}`)
       .then(() => {
+
+        
         // Update state to remove the deleted user from the list
         setUsers(users.filter((user) => user.id !== id));
       })
@@ -41,7 +43,7 @@ function UsersTable() {
         <div className=" -mt-8 mr-6">
           <SideBar />
         </div>
-        <div className="flex justify-between items-center w-full">
+        <div className="flex  w-full">
           <div className="w-full">
             <h2 className="text-xl font-bold mb-4">Users List</h2>
             <div className="">
@@ -97,7 +99,7 @@ function UsersTable() {
               </table>
             </div>
           </div>
-          <div>
+          <div className="-ml-[400px] mt-4">
             <UserForm />
           </div>
         </div>
