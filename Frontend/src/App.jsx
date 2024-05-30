@@ -8,6 +8,7 @@ import Header from "./comp/Header";
 import UsersTable from "./comp/UsersTable";
 import SallesList from "./comp/SallesList";
 import AddHolidayForm from "./comp/AddHolidayForm";
+import UserProfile from "./comp/UserProfile";
 const App = () => {
   return (
     <div className="app-container">
@@ -27,6 +28,9 @@ const App = () => {
           </Route>
           <Route path="/addEvent">
             <AddHolidayForm />
+          </Route>
+          <Route path="/profile">
+            <UserProfile />
           </Route>
 
           <Route path="/">
