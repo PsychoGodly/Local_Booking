@@ -11,7 +11,7 @@
 
 
 <div align="center">
-    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#features">
+    <a href="https://github.com/PsychoGodly/Local_Booking/README.md#features">
         <img src="https://img.shields.io/badge/Features-cyan" alt="Features">
     </a>
     <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#beta-version-changelogs">
