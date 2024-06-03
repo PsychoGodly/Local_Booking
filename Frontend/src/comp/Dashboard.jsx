@@ -3,7 +3,9 @@ import SideBar from "./SideBar";
 import config from "../Config";
 import Header from "./Header";
 import ReservationStatistics from "./ReservationStatistics";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBroom, faBuilding, faCalendar, faCalendarAlt, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faResearchgate } from "@fortawesome/free-brands-svg-icons";
 const Dashboard = () => {
   const [numUsers, setNumUsers] = useState(null);
   const [numSalles, setNumSalles] = useState(null);
@@ -58,19 +60,19 @@ const Dashboard = () => {
               <div className="container mx-auto mt-8 px-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                   <div className="bg-blue-200 p-8 rounded-lg shadow-md">
-                    <h1 className="text-3xl font-bold mb-4">Users</h1>
+                    <h1 className="text-3xl font-bold mb-4"><FontAwesomeIcon className="pr-5" icon={faUser} />Users</h1>
                     <h2 className="text-xl font-semibold">{numUsers}</h2>
                   </div>
                   <div className="bg-green-200 p-8 rounded-lg shadow-md">
-                    <h1 className="text-3xl font-bold mb-4">Rooms</h1>
+                    <h1 className="text-3xl font-bold mb-4"><FontAwesomeIcon className="pr-5" icon={faBuilding} />Rooms</h1>
                     <h2 className="text-xl font-semibold">{numSalles}</h2>
                   </div>
                   <div className="bg-yellow-200 p-8 rounded-lg shadow-md">
-                    <h1 className="text-3xl font-bold mb-4">Reservations</h1>
+                    <h1 className="text-3xl font-bold mb-4"><FontAwesomeIcon className="pr-5" icon={faCalendarAlt} />Reservations</h1>
                     <h2 className="text-xl font-semibold">{numReservations}</h2>
                   </div>
                   <div className="bg-purple-200 p-8 rounded-lg shadow-md">
-                    <h1 className="text-3xl font-bold mb-4">Events</h1>
+                    <h1 className="text-3xl font-bold mb-4"><FontAwesomeIcon className="pr-5" icon={faCalendar} />Events</h1>
                     <h2 className="text-xl font-semibold">{numEvents}</h2>
                   </div>
                 </div>
