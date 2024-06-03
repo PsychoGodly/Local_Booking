@@ -11,7 +11,6 @@ import AddHolidayForm from "./comp/AddHolidayForm";
 import UserProfile from "./comp/UserProfile";
 import ApexChart from "./comp/ReservationStatistics";
 import ReservationStatistics from "./comp/ReservationStatistics";
-import HolidaysList from "./comp/HolidaysList";
 const App = () => {
   return (
     <div className="app-container">
@@ -30,7 +29,7 @@ const App = () => {
             <SallesList />
           </Route>
           <Route path="/addEvent">
-            <HolidaysList />
+            <AddHolidayForm />
           </Route>
           <Route path="/profile">
             <UserProfile />

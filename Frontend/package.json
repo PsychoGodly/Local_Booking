@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
@@ -24,9 +22,6 @@
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
-    "@mui/icons-material": "^5.15.19",
-    "@mui/material": "^5.15.19",
-    "@mui/x-data-grid": "^7.6.1",
     "antd": "^5.17.4",
     "apexcharts": "^3.49.1",
     "axios": "^1.7.0",
