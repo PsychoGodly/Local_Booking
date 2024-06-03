@@ -14,25 +14,25 @@
     <a href="https://github.com/PsychoGodly/Local_Booking/tree/master#features">
         <img src="https://img.shields.io/badge/Features-cyan" alt="Features">
     </a>
-    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#beta-version-changelogs">
+    <a href="https://github.com/PsychoGodly/Local_Booking/tree/master#beta-version-changelogs">
         <img src="https://img.shields.io/badge/Beta%20Version%20Changelogs-orange" alt="Beta Version Changelogs">
     </a>
-    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#stable-version-changelogs">
+    <a href="https://github.com/PsychoGodly/Local_Booking/tree/master#stable-version-changelogs">
         <img src="https://img.shields.io/badge/Stable%20Version%20Changelogs-lightgreen" alt="Stable Version Changelogs">
     </a>
-    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#tech">
+    <a href="https://github.com/PsychoGodly/Local_Booking/tree/master#tech">
         <img src="https://img.shields.io/badge/Tech-yellow" alt="Tech">
     </a>
     <a href="https://github.com/PsychoGodly/Local_Booking/releases">
         <img src="https://img.shields.io/badge/Download-green" alt="Download">
     </a>
-    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#installation">
+    <a href="https://github.com/PsychoGodly/Local_Booking/tree/master#installation">
         <img src="https://img.shields.io/badge/Installation-orange" alt="Installation">
     </a>
-    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#run">
+    <a href="https://github.com/PsychoGodly/Local_Booking/tree/master#run">
         <img src="https://img.shields.io/badge/Run-red" alt="Run">
     </a>
-    <a href="https://github.com/PsychoGodly/Local_Booking/edit/main/README.md#license">
+    <a href="https://github.com/PsychoGodly/Local_Booking/tree/master#license">
         <img src="https://img.shields.io/badge/License-lightgrey" alt="License">
     </a>
 </div>
