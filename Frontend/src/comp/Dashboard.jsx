@@ -47,7 +47,7 @@ const Dashboard = () => {
   return (
     <div>
       <Header />
-      <div className="calendar-layout flex justify-between  ">
+      <div className="calendar-layout flex   ">
         {/*Sidbar com*/}
         <div className="sidebar">
           <SideBar />
