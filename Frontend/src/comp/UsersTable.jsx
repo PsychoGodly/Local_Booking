@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import config from "../Config";
 import Header from "./Header";
@@ -6,6 +6,11 @@ import SideBar from "./SideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserXmark, faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import UserForm from "./UserForm";
+import Box from '@mui/material/Box';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
@@ -26,8 +31,6 @@ function UsersTable() {
     axios
       .delete(`http://localhost:${config.portBackend}/api/user/${id}`)
       .then(() => {
-
-        
         // Update state to remove the deleted user from the list
         setUsers(users.filter((user) => user.id !== id));
       })
@@ -36,6 +39,34 @@ function UsersTable() {
       });
   };
 
+  const columns = useMemo(
+    () => [
+      { field: 'id', headerName: 'ID', width: 70 },
+      { field: 'username', headerName: 'Username', width: 200 },
+      { field: 'email', headerName: 'Email', width: 250 },
+      { field: 'role', headerName: 'Role', width: 150 },
+      {
+        field: 'actions',
+        headerName: 'Actions',
+        width: 150,
+        renderCell: (params) => (
+          <>
+            <IconButton color="primary">
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              color="secondary"
+              onClick={() => deleteUser(params.row.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </>
+        ),
+      },
+    ],
+    [deleteUser]
+  );
+
   return (
     <div>
       <Header />
@@ -43,63 +74,22 @@ function UsersTable() {
         <div className=" -mt-8 mr-6">
           <SideBar />
         </div>
-        <div className="flex  w-full">
+        <div className="flex w-full">
           <div className="w-full">
             <h2 className="text-xl font-bold mb-4">Users List</h2>
-            <div className="">
-              <table className="border border-gray-400">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 bg-gray-200 border border-gray-400">
-                      ID
-                    </th>
-                    <th className="px-4 py-2 bg-gray-200 border border-gray-400">
-                      Username
-                    </th>
-                    <th className="px-4 py-2 bg-gray-200 border border-gray-400">
-                      Email
-                    </th>
-                    <th className="px-4 py-2 bg-gray-200 border border-gray-400">
-                      Role
-                    </th>
-                    <th className="px-4 py-2 bg-gray-200 border border-gray-400">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user) => (
-                    <tr key={user.id}>
-                      <td className="px-4 py-2 border border-gray-400">
-                        {user.id}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-400">
-                        {user.username}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-400">
-                        {user.email}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-400">
-                        {user.role}
-                      </td>
-                      <td className="px-4 py-2 border border-gray-400 flex space-x-2">
-                        <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">
-                          <FontAwesomeIcon icon={faUserEdit} />
-                        </button>
-                        <button
-                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
-                          onClick={() => deleteUser(user.id)}
-                        >
-                          <FontAwesomeIcon icon={faUserXmark} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Box sx={{ height: 600, width: '100%' }}>
+              <DataGrid
+                rows={users}
+                columns={columns}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                components={{
+                  Toolbar: GridToolbar,
+                }}
+              />
+            </Box>
           </div>
-          <div className="-ml-[400px] mt-4">
+          <div className="ml-8 mt-4">
             <UserForm />
           </div>
         </div>

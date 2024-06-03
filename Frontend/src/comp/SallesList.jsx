@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import config from "../Config";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash, faUserEdit, faUserXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AddSalleForm from "./AddSalleForm";
+import Box from '@mui/material/Box';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const SallesList = () => {
   const [salles, setSalles] = useState([]);
@@ -33,9 +38,36 @@ const SallesList = () => {
         setSalles(salles.filter((salle) => salle.id !== id));
       })
       .catch((error) => {
-        console.error("Error deleting user:", error);
+        console.error("Error deleting salle:", error);
       });
   };
+
+  const columns = useMemo(
+    () => [
+      { field: 'id', headerName: 'ID', width: 70 },
+      { field: 'salleName', headerName: 'Name', width: 200 },
+      { field: 'capacity', headerName: 'Capacity', width: 150 },
+      {
+        field: 'actions',
+        headerName: 'Actions',
+        width: 150,
+        renderCell: (params) => (
+          <>
+            <IconButton color="primary">
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              color="secondary"
+              onClick={() => deleteSalle(params.row.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </>
+        ),
+      },
+    ],
+    [deleteSalle]
+  );
 
   return (
     <div>
@@ -44,41 +76,24 @@ const SallesList = () => {
         <div className="mr-6">
           <SideBar />
         </div>
-        <div className="container w-2/5 px-4">
-          <h1 className="text-2xl font-bold mt-8 mb-4">List of Salles</h1>
-          <table className="w-full border border-collapse border-gray-400">
-            <thead className="bg-gray-200">
-              <tr>
-                <th className="px-4 py-2">ID</th>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Capacity</th>
-                <th className="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="text-center">
-              {salles.map((salle) => (
-                <tr key={salle.id} className="border-b border-gray-400">
-                  <td className="px-4 py-2">{salle.id}</td>
-                  <td className="px-4 py-2">{salle.salleName}</td>
-                  <td className="px-4 py-2">{salle.capacity}</td>
-                  <td className="px-4 py-2 flex space-x-2">
-                    <button className="action-button bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">
-                      <FontAwesomeIcon icon={faPen} />
-                    </button>
-                    <button
-                      className="action-button bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
-                      onClick={() => deleteSalle(salle.id)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="ml-[100px] mt-5">
-        <AddSalleForm />
+        <div className="flex w-full">
+          <div className="w-full">
+            <h1 className="text-2xl font-bold mt-8 mb-4">List of Salles</h1>
+            <Box sx={{ height: 600, width: '100%' }}>
+              <DataGrid
+                rows={salles}
+                columns={columns}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                components={{
+                  Toolbar: GridToolbar,
+                }}
+              />
+            </Box>
+          </div>
+          <div className="ml-8 mt-4">
+            <AddSalleForm />
+          </div>
         </div>
       </div>
     </div>
