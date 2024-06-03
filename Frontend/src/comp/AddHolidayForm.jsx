@@ -3,6 +3,7 @@ import axios from "axios";
 import config from "../Config";
 import SideBar from "./SideBar";
 import Header from "./Header";
+import HolidaysList from "./HolidaysList";
 
 const AddHolidayForm = () => {
   const [holiday, setHoliday] = useState({
@@ -38,6 +39,8 @@ const AddHolidayForm = () => {
         <div className="-mt-8 mr-6">
           <SideBar />
         </div>
+        <HolidaysList />
+
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-auto h-4/5">
           {message && (
             <div
