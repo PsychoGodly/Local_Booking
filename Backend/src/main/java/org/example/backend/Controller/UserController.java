@@ -4,6 +4,7 @@ import org.example.backend.Repository.UserRepository;
 import org.example.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,15 +44,17 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/addUser", consumes = { "application/json", "application/json;charset=UTF-8" }, produces = "application/json")
-    public ResponseEntity<String> addUser(@Valid @RequestBody User user) {
+    @PostMapping(value = "/addUser", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addUser(@RequestBody User user) {
         try {
             User savedUser = userRepository.save(user);
             return new ResponseEntity<>("User added with ID: " + savedUser.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to add user", HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace(); // Log the exception details
+            return new ResponseEntity<>("Failed to add user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping(value = "/user/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User userDetails) {
         try {
@@ -77,11 +80,7 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         try {
             Optional<User> optionalUser = userRepository.findById(id);
-            if (optionalUser.isPresent()) {
-                return ResponseEntity.ok(optionalUser.get());
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            return optionalUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
