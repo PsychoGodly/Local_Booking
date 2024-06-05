@@ -21,6 +21,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     // List des Users
     @GetMapping("/users")
     public List<User> get_Users() {
@@ -49,19 +52,18 @@ public class UserController {
     }
 
 
-    @PostMapping("/addUser")
+    @PostMapping(value = "/addUser", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> addUser(@RequestBody User user) {
         try {
-            User savedUser = userRepository.save(user);
-            return new ResponseEntity<>("Holiday added with ID: " + savedUser.getId(), HttpStatus.CREATED);
+            User savedUser = userService.addUser(user);
+            return new ResponseEntity<>("User added with ID: " + savedUser.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to add holiday", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to add user", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-    @Autowired
-    private UserService userService;
+
 
     @GetMapping("/admin/profile")
     public ResponseEntity<User> getAdminProfile() {

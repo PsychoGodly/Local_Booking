@@ -15,4 +15,13 @@ public class UserService {
     public Optional<User> getAdminProfile() {
         return userRepository.findByRole("admin");
     }
+
+
+    public User addUser(User user) throws Exception {
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            throw new Exception("Failed to add user", e);
+        }
+    }
 }
