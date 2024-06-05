@@ -1,15 +1,13 @@
 package org.example.backend.Controller;
 
-
 import org.example.backend.Repository.UserRepository;
-import org.example.backend.Service.UserService;
-import org.example.backend.model.Holiday;
 import org.example.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,18 +19,15 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    // List des Users
     @GetMapping("/users")
-    public List<User> get_Users() {
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-
     @GetMapping("/Num_user")
-    public Long getNum_Users() {
+    public Long getNumUsers() {
         return userRepository.count();
     }
-
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
@@ -48,30 +43,47 @@ public class UserController {
         }
     }
 
-
-    @PostMapping("/addUser")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
+    @PostMapping(value = "/addUser")
+    public ResponseEntity<String> addUser(@Valid @RequestBody User user) {
         try {
             User savedUser = userRepository.save(user);
-            return new ResponseEntity<>("Holiday added with ID: " + savedUser.getId(), HttpStatus.CREATED);
+            return new ResponseEntity<>("User added with ID: " + savedUser.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to add holiday", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to add user", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping(value = "/user/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User userDetails) {
+        try {
+            Optional<User> optionalUser = userRepository.findById(id);
+            if (optionalUser.isPresent()) {
+                User existingUser = optionalUser.get();
+                existingUser.setUsername(userDetails.getUsername());
+                existingUser.setPassword(userDetails.getPassword());
+                existingUser.setEmail(userDetails.getEmail());
+                existingUser.setRole(userDetails.getRole());
+
+                User updatedUser = userRepository.save(existingUser);
+                return ResponseEntity.ok(updatedUser);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/admin/profile")
-    public ResponseEntity<User> getAdminProfile() {
-        Optional<User> admin = userService.getAdminProfile();
-        if (admin.isPresent()) {
-            return ResponseEntity.ok(admin.get());
-        } else {
-            return ResponseEntity.notFound().build();
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        try {
+            Optional<User> optionalUser = userRepository.findById(id);
+            if (optionalUser.isPresent()) {
+                return ResponseEntity.ok(optionalUser.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
 }
-
