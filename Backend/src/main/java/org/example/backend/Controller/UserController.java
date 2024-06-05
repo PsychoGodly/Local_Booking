@@ -43,7 +43,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/addUser")
+    @PostMapping(value = "/addUser", consumes = { "application/json", "application/json;charset=UTF-8" }, produces = "application/json")
     public ResponseEntity<String> addUser(@Valid @RequestBody User user) {
         try {
             User savedUser = userRepository.save(user);
